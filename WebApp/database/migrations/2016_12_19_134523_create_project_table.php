@@ -19,7 +19,6 @@ class CreateProjectTable extends Migration
           $table->string('description');
           $table->integer('size');
           $table->boolean('taken');
-          $table->rememberToken();
           $table->timestamps();
       });
     }
