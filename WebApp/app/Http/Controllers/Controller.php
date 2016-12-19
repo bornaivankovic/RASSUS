@@ -15,7 +15,7 @@ class Controller extends BaseController
 
 {
 
-$this->middleware(‘auth.basic.once’);
+$this->middleware('auth.basic.once');
 
 }
 }
