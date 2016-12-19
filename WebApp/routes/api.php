@@ -13,10 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('admin', function () {
-    return "YEEEY";
-})->middleware('auth.basic.once');
-
 Route::get('projects', 'APIController@index');
 
 Route::get('projects/{id}', 'APIController@show');
+
+Route::post('projects', 'APIController@store')->middleware('auth.basic.once');
+
+Route::delete('projects/{id}', 'APIController@delete')->middleware('auth.basic.once');
+
+Route::put('projects/{id}', 'APIController@update')->middleware('auth.basic.once');

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Project;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Request;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class APIController extends Controller
@@ -22,16 +24,6 @@ class APIController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,7 +31,18 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $data = $request->json()->all();
+
+      $project = new Project;
+
+      $project->title = $data['projects']['title'];
+      $project->description = $data['projects']['description'];
+      $project->size = $data['projects']['size'];
+      $project->taken = $data['projects']['taken'];
+
+      $project->save();
+
+      return "Success";
     }
 
     /**
@@ -56,27 +59,25 @@ class APIController extends Controller
       ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->json()->all();
+
+        $project = new Project;
+
+        $project->title = $data['projects']['title'];
+        $project->description = $data['projects']['description'];
+        $project->size = $data['projects']['size'];
+        $project->taken = $data['projects']['taken'];
+
+        DB::table('projects')
+            ->where('id', $id)
+            ->update(['title' => $project->title,
+                      'description' => $project->description,
+                      'size' => $project->size,
+                      'taken' => $project->taken]);
+
+        return "Success";
     }
 
     /**
@@ -85,8 +86,9 @@ class APIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        DB::table('projects')->where('id', '=', $id)->delete();
+        return $id;
     }
 }
