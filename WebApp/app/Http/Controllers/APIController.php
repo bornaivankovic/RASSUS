@@ -16,11 +16,11 @@ class APIController extends Controller
      */
     public function index()
     {
-        $projects = DB::table('projects')->get();
-
-        return response()->json([
-            'projects' => $projects,
-        ]);
+        $projects_json = json_encode(DB::table('projects')->get());
+        return response($projects_json)
+            ->withHeaders([
+                'Content-Type' => 'application/json',
+            ]);
     }
 
     /**
@@ -53,10 +53,12 @@ class APIController extends Controller
      */
     public function show($id)
     {
-      $project = DB::table('projects')->where('id', $id)->first();
-      return response()->json([
-          $project,
-      ]);
+
+      $project_json = json_encode(DB::table('projects')->where('id', $id)->first());
+      return response($project_json)
+          ->withHeaders([
+              'Content-Type' => 'application/json',
+          ]);
     }
 
     public function update(Request $request, $id)
