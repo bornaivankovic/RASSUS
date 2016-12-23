@@ -33,7 +33,6 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-      //$data = $request->json()->all();
       $json_data = $request->getContent();
       $json_decoded = json_decode($json_data);
 
@@ -95,16 +94,24 @@ class APIController extends Controller
     public function show($id)
     {
 
-      $project_json = json_encode(DB::table('projects')->where('id', $id)->first());
-      return response($project_json)
-          ->withHeaders([
-              'Content-Type' => 'application/json',
-          ]);
+      $project = Project::find($id);
+
+      if(empty($project)){
+        return response("", 404);
+      } else {
+        return response($project)
+            ->withHeaders([
+                'Content-Type' => 'application/json',
+            ]);
+      }
+
     }
 
     public function update(Request $request, $id)
     {
-        $data = $request->json()->all();
+      $json_data = $request->getContent();
+      $json_decoded = json_decode($json_data);
+
 
         $project = new Project;
 
