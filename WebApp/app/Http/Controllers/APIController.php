@@ -37,16 +37,14 @@ class APIController extends Controller
       $json_data = $request->getContent();
       $json_decoded = json_decode($json_data);
 
-      $validation_errors = [];
-
       foreach ($json_decoded as $value) {
 
 
         $validator = Validator::make((array)$value, [
-        'title' => 'required',
-        'description' => 'required',
-        'size' => 'required',
-        'taken'  => 'required'
+        'title' => 'bail|required',
+        'description' => 'bail|required',
+        'size' => 'bail|required',
+        'taken'  => 'bail|required'
         ]);
 
         if ($validator->fails()) {
@@ -139,7 +137,13 @@ class APIController extends Controller
      */
     public function delete($id)
     {
-        DB::table('projects')->where('id', '=', $id)->delete();
-        return $id;
+        $project = Project::find($id);
+
+        if(empty($project)){
+          return response("", 404);
+        } else {
+          $project->delete();
+          return response("", 204);
+        }
     }
 }

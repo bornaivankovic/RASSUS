@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Closure, Request, Response;
@@ -19,18 +20,18 @@ public function handle($request, Closure $next)
 
 {
 
+  $username = Request::getUser();
+  $user = User::where('username', $username)->first();
 
-$username = Request::getUser();
-$user = DB::table('users')->where('username', $username)->first();
-if($user->admin != 1)
-{
+  if(empty($user)  || ($user->admin == 0)) {
 
-$headers = array('WWW-Authenticate' => 'Basic');
-return Response::make('Invalid credentials.', 401, $headers);
+    return response('Invalid credentials', 400)
+              ->withHeaders([
+                  'WWW-Authenticate' => 'Basic',
+                ]);
+  }
+  return $next($request);
 
-}
-return $next($request);
-
-}
+  }
 
 }
