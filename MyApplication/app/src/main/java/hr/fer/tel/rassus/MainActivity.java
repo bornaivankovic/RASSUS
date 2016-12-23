@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void browse(View view){
         Intent intent = new Intent(MainActivity.this,BrowseActivity.class);
+        EditText t1=(EditText) findViewById(R.id.hostIP);
+        EditText t2=(EditText) findViewById(R.id.hostPort);
+        String hostname=t1.getText()+":"+t2.getText();
+        intent.putExtra("hostname",hostname);
         startActivity(intent);
     }
 

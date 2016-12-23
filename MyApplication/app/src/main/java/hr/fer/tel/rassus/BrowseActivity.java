@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 public class BrowseActivity extends AppCompatActivity {
@@ -16,6 +17,7 @@ public class BrowseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_browse);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String hostname=getIntent().getStringExtra("hostname");
 
 
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
@@ -26,7 +28,7 @@ public class BrowseActivity extends AppCompatActivity {
                 listView.setAdapter(new MyListAdapter(parser.parse(),getApplicationContext()));
 
             }
-        }).execute("https://jsonplaceholder.typicode.com/posts/1/comments");
+        }).execute("http://"+hostname+"/api/v0.2/projects");
     }
 
 }
