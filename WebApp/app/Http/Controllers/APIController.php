@@ -10,7 +10,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 class APIController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Returns all projects
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,18 +31,28 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->json()->all();
+      //$data = $request->json()->all();
+      $json_data = $request->getContent();
+      $json_decoded = json_decode($json_data);
 
-      $project = new Project;
+      foreach ($json_decoded as $value) {
 
-      $project->title = $data['projects']['title'];
-      $project->description = $data['projects']['description'];
-      $project->size = $data['projects']['size'];
-      $project->taken = $data['projects']['taken'];
+          $project = new Project;
 
-      $project->save();
+          $project->title = $value->title;
+          $project->description = $value->description;
+          $project->size = $value->size;
+          $project->taken = $value->taken;
 
-      return "Success";
+          $project->save();
+
+
+      }
+      return response("Success")
+          ->withHeaders([
+              'Content-Type' => 'application/json',
+          ]);
+
     }
 
     /**
