@@ -18,8 +18,9 @@ class APIController extends Controller
      */
     public function index()
     {
-        $projects_json = json_encode(DB::table('projects')->get());
-        return response($projects_json)
+        $projects = Project::all();
+
+        return response($projects)
             ->withHeaders([
                 'Content-Type' => 'application/json',
             ]);
