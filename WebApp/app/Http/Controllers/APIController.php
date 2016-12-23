@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Validator;
+use Illuminate\Http\Response;
 
 class APIController extends Controller
 {
@@ -35,19 +37,48 @@ class APIController extends Controller
       $json_data = $request->getContent();
       $json_decoded = json_decode($json_data);
 
+      $validation_errors = [];
+
       foreach ($json_decoded as $value) {
 
-          $project = new Project;
 
-          $project->title = $value->title;
-          $project->description = $value->description;
-          $project->size = $value->size;
-          $project->taken = $value->taken;
+        $validator = Validator::make((array)$value, [
+        'title' => 'required',
+        'description' => 'required',
+        'size' => 'required',
+        'taken'  => 'required'
+        ]);
 
-          $project->save();
-
+        if ($validator->fails()) {
+          array_push($validation_errors, $validator->errors());
+         }
 
       }
+
+      if(!empty($validation_errors)){
+        return response([
+              'message' => "Invalid format",
+              'errors' => $validation_errors
+              ],
+              400)
+                  ->withHeaders([
+                      'Content-Type' => 'application/json',
+                  ]);
+      }
+
+
+
+      foreach ($json_decoded as $value) {
+        $project = new Project;
+
+        $project->title = $value->title;
+        $project->description = $value->description;
+        $project->size = $value->size;
+        $project->taken = $value->taken;
+
+        $project->save();
+      }
+
       return response("Success")
           ->withHeaders([
               'Content-Type' => 'application/json',
