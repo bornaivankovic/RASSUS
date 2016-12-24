@@ -34,17 +34,28 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-      $json_data = $request->getContent();
-      $json_decoded = json_decode($json_data);
+      $request_body = $request->getContent();
+
+      //validacija za prazan objekt
+      if(empty($request_body)) {
+        return response("Invalid request format", 400);
+      }
+
+      $json_decoded = json_decode($request_body);
+
+      //validacija za neispravan JSON format
+      if(is_null($json_decoded)) {
+        return response("Invalid request format", 400);
+      }
 
       foreach ($json_decoded as $value) {
 
-
+        //validacija za nepotpun JSON format
         $validator = Validator::make((array)$value, [
-        'title' => 'bail|required',
-        'description' => 'bail|required',
-        'size' => 'bail|required',
-        'taken'  => 'bail|required'
+        'title' => 'required',
+        'description' => 'required',
+        'size' => 'required',
+        'taken'  => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +78,7 @@ class APIController extends Controller
 
 
       foreach ($json_decoded as $value) {
+
         $project = new Project;
 
         $project->title = $value->title;
@@ -77,7 +89,7 @@ class APIController extends Controller
         $project->save();
       }
 
-      return response("Success")
+      return response("", 200)
           ->withHeaders([
               'Content-Type' => 'application/json',
           ]);
@@ -108,25 +120,50 @@ class APIController extends Controller
 
     public function update(Request $request, $id)
     {
-      $json_data = $request->getContent();
-      $json_decoded = json_decode($json_data);
+
+      $project = Project::find($id);
+      $request_body = $request->getContent();
+
+      if(empty($project)){
+        return response("", 404);
+      }
+
+      //validacija za prazan objekt
+      if(empty($request_body)) {
+        return response("Empty request_body", 400);
+      }
+
+      $json_decoded = json_decode($request_body);
+
+      //validacija za neispravan JSON format
+      if(is_null($json_decoded)) {
+        return response("Invalid JSON format", 400);
+      }
 
 
-        $project = new Project;
+        foreach ($json_decoded as $value) {
+          if(isset($value->title)){
+              $project->title = $value->title;
+          }
+          elseif (isset($value->description)) {
+              $project->description = $value->description;
+          }
+          elseif (isset($value->size)) {
+            $project->size = $value->size;
+          }
+          elseif (isset($value->taken)) {
+            $project->taken = $value->taken;
+          }
 
-        $project->title = $data['projects']['title'];
-        $project->description = $data['projects']['description'];
-        $project->size = $data['projects']['size'];
-        $project->taken = $data['projects']['taken'];
+        }
 
-        DB::table('projects')
-            ->where('id', $id)
-            ->update(['title' => $project->title,
-                      'description' => $project->description,
-                      'size' => $project->size,
-                      'taken' => $project->taken]);
+        $project->save();
 
-        return "Success";
+        return response("Updated", 200)
+            ->withHeaders([
+                'Content-Type' => 'application/json',
+            ]);
+
     }
 
     /**
