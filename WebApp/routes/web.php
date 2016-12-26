@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+
+/* Redirect /home request to actual homepage */
+Route::get('home', function () {
+    return redirect('/');
+});
+
+
