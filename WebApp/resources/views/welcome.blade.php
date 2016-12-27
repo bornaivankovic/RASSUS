@@ -43,8 +43,8 @@
 <div class="container-fluid" id="main-section">
   <div class="row text-center">
     <div class="col-xs-12" id="main-heading-container">
-      <h1>Apply.io</h1>
-      <h3>Sustav za prijavu i registraciju projekata</h3>
+      <h1>Apply <span class="span-dot">.</span><span class="span-io">io</span></h1>
+      <h3>Sustav za <span class="span-login">prijavu</span> i <span class="span-register">registraciju</span> projekata</h3>
     </div>
 
   </div>

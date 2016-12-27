@@ -1,7 +1,7 @@
 #nav {
   border: none;
   border-radius: 0px;
-  background-color: #423977;
+  background-color: #005FA3;
   margin-bottom: 0px;
   border-bottom: 1px solid #F0F0F0;
 }
@@ -41,12 +41,33 @@
 }
 
 #main-section {
-  background-color: #3B3B3A;
+  background-color: #2B2B2B;
   height: 1000px;
 }
 
+h1 {
+  font-size: 80px;
+  margin-bottom: 30px;
+}
+
+.span-login {
+  color: #56AE45;
+}
+
+.span-register {
+  color: #F1A64A;
+}
+
+.span-dot {
+  color: #005FA3;
+}
+
+.span-io {
+  color: #AC2925;
+}
+
 #main-heading-container {
-  padding: 100px 100px 100px 100px;
+  padding: 100px 10px 100px 10px;
   color: white;
   font-family: 'Acme', sans-serif;
 }
