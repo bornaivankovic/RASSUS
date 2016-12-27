@@ -40,6 +40,15 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid" id="main-section">
+  <div class="row text-center">
+    <div class="col-xs-12" id="main-heading-container">
+      <h1>Apply.io</h1>
+      <h3>Sustav za prijavu i registraciju projekata</h3>
+    </div>
+
+  </div>
+</div>
 </body>
 
 </html>

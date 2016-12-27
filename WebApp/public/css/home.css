@@ -1,7 +1,9 @@
 #nav {
   border: none;
   border-radius: 0px;
-  background-color: #2B2B2B;
+  background-color: #423977;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #F0F0F0;
 }
 
 #buttons-container {
@@ -10,6 +12,12 @@
 
 #mobile-menu-btn {
   margin: 23px 15px 23px 15px;
+  border-color: white;
+}
+
+.icon-bar {
+  color: white;
+  background-color: white !important;
 }
 
 #logo {
@@ -18,7 +26,29 @@
 }
 
 #sign-in-btn, #register-btn {
+  width: 100px;
   border-radius: 0px;
+  border: 1px solid #56AE45;
+  color: white;
+  background-color: #56AE45;
+}
+
+#register-btn {
+  width: 100px;
+  border: 1px solid #F1A64A;
+  color: white;
+  background-color: #F1A64A;
+}
+
+#main-section {
+  background-color: #3B3B3A;
+  height: 1000px;
+}
+
+#main-heading-container {
+  padding: 100px 100px 100px 100px;
+  color: white;
+  font-family: 'Acme', sans-serif;
 }
 
 /*# sourceMappingURL=home.css.map */
