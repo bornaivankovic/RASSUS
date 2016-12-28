@@ -2,53 +2,138 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap and default laravel variables -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
 
     <!-- Page specific styles -->
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/normalize.css') }}" rel="stylesheet" type="text/css" >
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" >
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 
     <title>Home</title>
 </head>
 
-<body>
-  <nav class="navbar navbar-default" id="nav">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" id="mobile-menu-btn" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" id="logo" href="/">
-        <img src="{{ asset('images/logo/logo64.png') }}" alt="" />
-      </a>
-    </div>
+<body class="landing">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" id="buttons-container">
-        <button type="button" class="btn btn-default navbar-btn" id="sign-in-btn">Prijava</button>
-        <button type="button" class="btn btn-default navbar-btn" id="register-btn">Registracija</button>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<div class="container-fluid" id="main-section">
-  <div class="row text-center">
-    <div class="col-xs-12" id="main-heading-container">
-      <h1>Apply <span class="span-dot">.</span><span class="span-io">io</span></h1>
-      <h3>Sustav za <span class="span-login">prijavu</span> i <span class="span-register">registraciju</span> projekata</h3>
-    </div>
+	<!-- Page Wrapper -->
+	<div id="page-wrapper">
 
-  </div>
-</div>
+		<!-- Header -->
+		<header id="header" class="alt">
+			<h1><a href="index.html">APPLY.IO</a></h1>
+			<nav id="nav">
+				<ul>
+					<li class="special">
+						<a href="#menu" class="menuToggle"><span>Menu</span></a>
+						<div id="menu">
+							<ul>
+								<li><a href="index.html">Početna</a></li>
+								<li><a href="#three">O aplikaciji</a></li>
+								<li><a href="elements.html">Kontakt</a></li>
+								<li><a href="#">Registracija</a></li>
+								<li><a href="login.html">Prijava</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Banner -->
+		<section id="banner">
+			<div class="logo">
+				<img src="images/student.png" alt="" />
+			</div>
+			<div class="inner">
+				<h2>APPLY.IO</h2>
+				<p>Sustav<br /> za prijavu i registraciju<br /> projekata
+					<a href="#"></a></p>
+				<p class="android-paragraph"> Dostupno i za Android uređaje</p>
+				<ul class="actions">
+					<li>
+						<a href="#" class="button special download"><img src="images/android.png" alt="" />Preuzmi</a>
+					</li>
+				</ul>
+			</div>
+			<a href="#three" class="more scrolly" id="scroll-btn">O aplikaciji</a>
+		</section>
+		<!-- Three -->
+		<section id="three" class="wrapper style3 special">
+			<div class="inner">
+				<header class="major">
+					<h2>Accumsan mus tortor nunc aliquet</h2>
+					<p>Aliquam ut ex ut augue consectetur interdum. Donec amet imperdiet eleifend<br /> fringilla tincidunt. Nullam dui leo Aenean mi ligula, rhoncus ullamcorper.</p>
+				</header>
+				<ul class="features">
+					<li class="icon fa-paper-plane-o">
+						<h3>Arcu accumsan</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+					<li class="icon fa-laptop">
+						<h3>Ac Augue Eget</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+					<li class="icon fa-code">
+						<h3>Mus Scelerisque</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+					<li class="icon fa-headphones">
+						<h3>Mauris Imperdiet</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+					<li class="icon fa-heart-o">
+						<h3>Aenean Primis</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+					<li class="icon fa-flag-o">
+						<h3>Tortor Ut</h3>
+						<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section id="cta" class="wrapper style4">
+			<div id='browser'>
+				<div id='browser-bar'>
+					<div class='circles'></div>
+					<div class='circles'></div>
+					<div class='circles'></div>
+					<p>Kontaktirajte nas</p>
+					<span class='arrow entypo-resize-full'></span>
+				</div>
+				<div id='content'>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+				<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; FER 2016</li>
+				<li>Developed by: <a href="http://www.fer.unizg.hr/">FER 2016.</a></li>
+			</ul>
+		</footer>
+	</div>
+  <!-- Scripts -->
+  <script type="text/javascript" src="{!! asset('js/jquery.min.js') !!}"></script>
+  <script type="text/javascript" src="{!! asset('js/jquery.scrollex.min.js') !!}"></script>
+  <script type="text/javascript" src="{!! asset('js/jquery.scrolly.min.js') !!}"></script>
+  <script type="text/javascript" src="{!! asset('js/skel.min.js') !!}"></script>
+  <script type="text/javascript" src="{!! asset('js/util.js') !!}"></script>
+  <script type="text/javascript" src="{!! asset('js/main.js') !!}"></script>
+  <!--[if lte IE 8]><script src="{!! asset('js/ie/main.js') !!}"></script><![endif]-->
 </body>
 
 </html>
