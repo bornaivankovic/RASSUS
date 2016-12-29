@@ -1,0 +1,17 @@
+.panel, .panel-heading {
+  background-color: #4A4A4A;
+  border: none;
+  border-radius: 0px;
+}
+
+.panel-default > .panel-heading {
+  background-color: #2B2B2B;
+  color: white;
+}
+
+.register  {
+  border: 0px;
+  border-radius: 0px;
+  box-shadow: none;
+  background-color: #21b2a6;
+}

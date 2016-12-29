@@ -8,11 +8,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Apply.io') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-
+    @if (Route::currentRouteName() == "login")
+    <link href="/css/login.css" rel="stylesheet">
+    @endif
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

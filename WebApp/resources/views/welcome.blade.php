@@ -22,18 +22,18 @@
 
 		<!-- Header -->
 		<header id="header" class="alt">
-			<h1><a href="index.html">APPLY.IO</a></h1>
+			<h1><a href="/">APPLY.IO</a></h1>
 			<nav id="nav">
 				<ul>
 					<li class="special">
 						<a href="#menu" class="menuToggle"><span>Menu</span></a>
 						<div id="menu">
 							<ul>
-								<li><a href="index.html">Početna</a></li>
+								<li><a href="/">Početna</a></li>
 								<li><a href="#three">O aplikaciji</a></li>
 								<li><a href="elements.html">Kontakt</a></li>
-								<li><a href="#">Registracija</a></li>
-								<li><a href="login.html">Prijava</a></li>
+								<li><a href="/register">Registracija</a></li>
+								<li><a href="/login">Prijava</a></li>
 							</ul>
 						</div>
 					</li>
