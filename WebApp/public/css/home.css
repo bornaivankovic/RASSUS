@@ -1,0 +1,75 @@
+#nav {
+  border: none;
+  border-radius: 0px;
+  background-color: #005FA3;
+  margin-bottom: 0px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+#buttons-container {
+  padding: 15px 0px 15px 0px;
+}
+
+#mobile-menu-btn {
+  margin: 23px 15px 23px 15px;
+  border-color: white;
+}
+
+.icon-bar {
+  color: white;
+  background-color: white !important;
+}
+
+#logo {
+  height: 80px;
+  padding: 8px 0px 0px 20px;
+}
+
+#sign-in-btn, #register-btn {
+  width: 100px;
+  border-radius: 0px;
+  border: 1px solid #56AE45;
+  color: white;
+  background-color: #56AE45;
+}
+
+#register-btn {
+  width: 100px;
+  border: 1px solid #F1A64A;
+  color: white;
+  background-color: #F1A64A;
+}
+
+#main-section {
+  background-color: #2B2B2B;
+  height: 1000px;
+}
+
+h1 {
+  font-size: 80px;
+  margin-bottom: 30px;
+}
+
+.span-login {
+  color: #56AE45;
+}
+
+.span-register {
+  color: #F1A64A;
+}
+
+.span-dot {
+  color: #005FA3;
+}
+
+.span-io {
+  color: #AC2925;
+}
+
+#main-heading-container {
+  padding: 100px 10px 100px 10px;
+  color: white;
+  font-family: 'Acme', sans-serif;
+}
+
+/*# sourceMappingURL=home.css.map */
