@@ -28,18 +28,21 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->json()->all();
+      $data = json_encode($request->all());
 
+      return $data;
+      /*
       $project = new Project;
 
-      $project->title = $data['projects']['title'];
-      $project->description = $data['projects']['description'];
-      $project->size = $data['projects']['size'];
-      $project->taken = $data['projects']['taken'];
+      $project->title = $data['title'];
+      $project->description = $data['description'];
+      $project->size = $data['size'];
+      $project->taken = $data['taken'];
 
       $project->save();
 
       return "Success";
+      */
     }
 
     /**
