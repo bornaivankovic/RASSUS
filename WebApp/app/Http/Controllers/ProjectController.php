@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Http\Request;
+use Validator;
+use Response;
+use Illuminate\Support\Facades\Input;
+
 
 class ProjectController extends Controller
 {
@@ -13,9 +17,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+        return view('admin.projects.index',['projects' => $projects]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -23,7 +27,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +38,30 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      $rules = array(
+        'title' => 'required',
+        'description' => 'required'
+      );
+      // for Validator
+      $validator = Validator::make ( Input::all (), $rules );
+      
+      if ($validator->fails())
+        return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+      else {
+        $project = new Project();
+        $project->title = $request->title;
+        $project->description = $request->description;
+        $project->taken = 0;
+        $project->size = 5;
+
+        $project->save();
+
+        return response()->json($project);
+      }
+
+
+
     }
 
     /**
@@ -54,9 +81,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -66,9 +93,18 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $project = Project::find($request->id)->first();
+
+      $project->title = $request->title;
+      $project->description = $request->description;
+      $project->taken = 0;
+      $project->size = 5;
+
+      $project->save();
+
+      return response()->json($project);
     }
 
     public function apply(Request $request, $id)
@@ -83,8 +119,9 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      Project::find($request->id)->delete();
+      return response()->json();
     }
 }
