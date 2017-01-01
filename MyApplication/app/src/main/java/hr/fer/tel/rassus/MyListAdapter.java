@@ -48,7 +48,7 @@ public class MyListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int i) {
-        return list.get(i).get("name");
+        return list.get(i).get("title");
     }
 
     @Override
