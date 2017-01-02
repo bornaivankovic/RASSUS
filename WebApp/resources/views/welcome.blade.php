@@ -31,9 +31,15 @@
 							<ul>
 								<li><a href="/">Početna</a></li>
 								<li><a href="#three">O aplikaciji</a></li>
-								<li><a href="elements.html">Kontakt</a></li>
-								<li><a href="/register">Registracija</a></li>
-								<li><a href="/login">Prijava</a></li>
+								<li><a href="/#cta">Kontakt</a></li>
+                @if (Auth::check())
+                    <li><a href="/logout">Odjava</a></li>
+                @endif
+                @if (Auth::guest())
+                  <li><a href="/register">Registracija</a></li>
+  								<li><a href="/login">Prijava</a></li>
+                @endif
+
 							</ul>
 						</div>
 					</li>

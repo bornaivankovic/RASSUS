@@ -18,13 +18,33 @@ Route::get('/', function () {
 Auth::routes();
 
 
+Route::get('profile', function () {
+    if (Auth::user()->admin == 1) {
+      return redirect('admin');
+    } else {
+      return redirect('user');
+    }
+});
+
+
+Route::get('register', function () {
+    return view('auth.register');
+});
+
+Route::get('logout', 'Auth\LoginController@logout');
+
 /* Redirect /home request to actual homepage */
 Route::get('home', function () {
-    return redirect('/');
+    return view('home');
 });
+
 
 Route::get('admin', function () {
     return view('admin.index');
+});
+
+Route::get('user', function () {
+    return view('user.index');
 });
 
 Route::get('/', function () {
