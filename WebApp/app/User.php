@@ -26,4 +26,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+
+    function socialProviders()
+    {
+        return $this->hasMany(SocialProvider::class);
+    }
 }

@@ -31,6 +31,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
+
 Route::group(['middleware' => ['web']], function() {
   Route::resource('/admin/projects','ProjectController');
   Route::post ( '/editItem', 'ProjectController@update' );
