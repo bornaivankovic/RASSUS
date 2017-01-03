@@ -260,7 +260,7 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="images/avtar.png" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{Auth::user()->username}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
@@ -316,7 +316,7 @@
                         <img src="images/avtar.png" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Alexander Pierce</p>
+                        <p>{{Auth::user()->username}}</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -653,7 +653,7 @@
 
                                     <p class="message">
                                         <a href="#" class="name">
-                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small> Alexander Pierce
+                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small> {{Auth::user()->username}}
                                         </a>
                                         I would like to meet you to discuss the latest news about the arrival of the new theme. They say it is going to be one the best themes on the market
                                     </p>

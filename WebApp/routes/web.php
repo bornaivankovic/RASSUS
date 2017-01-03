@@ -19,11 +19,15 @@ Auth::routes();
 
 
 Route::get('profile', function () {
+  if(Auth::check()){
     if (Auth::user()->admin == 1) {
       return redirect('admin');
     } else {
       return redirect('user');
     }
+  }
+  return redirect('/');
+
 });
 
 
@@ -41,7 +45,7 @@ Route::get('home', function () {
 
 Route::get('admin', function () {
     return view('admin.index');
-});
+})->middleware('authAdmin');
 
 Route::get('user', function () {
     return view('user.index');
@@ -54,7 +58,7 @@ Route::get('/', function () {
 Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
 
-Route::group(['middleware' => ['web']], function() {
+Route::group(['middleware' => ['authAdmin']], function() {
   Route::resource('/admin/projects','ProjectController');
   Route::post ( '/editItem', 'ProjectController@update' );
   Route::post ( '/addItem', 'ProjectController@store' );
