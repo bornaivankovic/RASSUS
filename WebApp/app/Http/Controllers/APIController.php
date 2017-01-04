@@ -55,7 +55,9 @@ class APIController extends Controller
         'title' => 'required',
         'description' => 'required',
         'size' => 'required',
-        'taken'  => 'required'
+        'taken'  => 'required',
+        'mentor'  => 'required',
+        'team'  => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +87,12 @@ class APIController extends Controller
         $project->description = $value->description;
         $project->size = $value->size;
         $project->taken = $value->taken;
+        $project->mentor = $value->mentor;
+        if (isset($value->team)) {
+          $project->team = $value->team;
+        } else {
+          $project->team = '';
+        }
 
         $project->save();
       }
@@ -153,6 +161,12 @@ class APIController extends Controller
           }
           elseif (isset($value->taken)) {
             $project->taken = $value->taken;
+          }
+          elseif (isset($value->mentor)) {
+            $project->mentor = $value->mentor;
+          }
+          elseif (isset($value->team)) {
+            $project->team = $value->team;
           }
 
         }
