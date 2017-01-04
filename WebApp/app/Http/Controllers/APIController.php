@@ -197,4 +197,23 @@ class APIController extends Controller
           return response("", 204);
         }
     }
+
+    public function checkIfAdmin(Request $request, $email) {
+      $user = User::where('email', $email)->first();
+
+      if(isset($user)){
+        if($user->admin == 1) {
+          return response()->json([
+              'admin' => true,
+          ]);
+        } else {
+          return response()->json([
+              'admin' => false,
+          ]);
+        }
+      } else {
+        return response("", 404);
+      }
+
+    }
 }
