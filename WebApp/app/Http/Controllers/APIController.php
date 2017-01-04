@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Project;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,7 +56,8 @@ class APIController extends Controller
         'title' => 'required',
         'description' => 'required',
         'size' => 'required',
-        'taken'  => 'required'
+        'taken'  => 'required',
+        'mentor'  => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +87,12 @@ class APIController extends Controller
         $project->description = $value->description;
         $project->size = $value->size;
         $project->taken = $value->taken;
+        $project->mentor = $value->mentor;
+        if (isset($value->team)) {
+          $project->team = $value->team;
+        } else {
+          $project->team = '';
+        }
 
         $project->save();
       }
@@ -154,6 +162,12 @@ class APIController extends Controller
           elseif (isset($value->taken)) {
             $project->taken = $value->taken;
           }
+          elseif (isset($value->mentor)) {
+            $project->mentor = $value->mentor;
+          }
+          elseif (isset($value->team)) {
+            $project->team = $value->team;
+          }
 
         }
 
@@ -182,5 +196,24 @@ class APIController extends Controller
           $project->delete();
           return response("", 204);
         }
+    }
+
+    public function checkIfAdmin(Request $request, $email) {
+      $user = User::where('email', $email)->first();
+
+      if(isset($user)){
+        if($user->admin == 1) {
+          return response()->json([
+              'admin' => true,
+          ]);
+        } else {
+          return response()->json([
+              'admin' => false,
+          ]);
+        }
+      } else {
+        return response("", 404);
+      }
+
     }
 }

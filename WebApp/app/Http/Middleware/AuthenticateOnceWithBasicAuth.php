@@ -20,8 +20,8 @@ public function handle($request, Closure $next)
 
 {
 
-  $username = Request::getUser();
-  $user = User::where('username', $username)->first();
+  $req_user = Request::getUser();
+  $user = User::where('email', $req_user)->first();
 
   if(empty($user)  || ($user->admin == 0)) {
 
