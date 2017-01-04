@@ -24,6 +24,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password','remember_token'
     ];
+
+
+    function socialProviders()
+    {
+        return $this->hasMany(SocialProvider::class);
+    }
 }

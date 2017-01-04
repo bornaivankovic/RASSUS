@@ -14,7 +14,7 @@
     @if (Route::currentRouteName() == "login")
       <link href="{{ asset('css/login.css') }}" rel="stylesheet" type="text/css" >
     @endif
-    @if (Route::currentRouteName() == "register")
+    @if (Route::getCurrentRoute()->getPath() == "register")
       <link href="{{ asset('css/register.css') }}" rel="stylesheet" type="text/css" >
     @endif
     <link href="{{ asset('css/normalize.css') }}" rel="stylesheet" type="text/css" >
@@ -23,7 +23,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
 
-    <title>Home</title>
+    <title>Početna</title>
 </head>
 
 <body class="landing">
@@ -41,10 +41,15 @@
 						<div id="menu">
 							<ul>
 								<li><a href="/">Početna</a></li>
-								<li><a href="#three">O aplikaciji</a></li>
-								<li><a href="elements.html">Kontakt</a></li>
-								<li><a href="/register">Registracija</a></li>
-								<li><a href="/login">Prijava</a></li>
+								<li><a href="/#three">O aplikaciji</a></li>
+								<li><a href="/#cta">Kontakt</a></li>
+                @if (Auth::check())
+                    <li><a href="/logout">Odjava</a></li>
+                @endif
+                @if (Auth::guest())
+                  <li><a href="/register">Registracija</a></li>
+  								<li><a href="/login">Prijava</a></li>
+                @endif
 							</ul>
 						</div>
 					</li>

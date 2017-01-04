@@ -11,7 +11,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Korisničko ime</label>
+                            <label for="email" class="col-md-4 control-label">E-mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
@@ -51,13 +51,13 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-5 col-md-offset-4">
-                              <a class="btn btn-block btn-social btn-facebook">
+                              <a href="{{ url('/auth/facebook') }}" class="btn btn-block btn-social btn-facebook">
                                 <span class="fa fa-facebook"></span> Sign in with Facebook
                               </a>
-                              <a class="btn btn-block btn-social btn-google">
+                              <a href="{{ url('/auth/google') }}" class="btn btn-block btn-social btn-google">
                                 <span class="fa fa-google"></span> Sign in with Google
                               </a>
-                              <a class="btn btn-block btn-social btn-twitter">
+                              <a href="{{ url('/auth/twitter') }}" class="btn btn-block btn-social btn-twitter">
                                 <span class="fa fa-twitter"></span> Sign in with Twitter
                               </a>
                             </div>
