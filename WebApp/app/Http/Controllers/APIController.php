@@ -57,8 +57,7 @@ class APIController extends Controller
         'description' => 'required',
         'size' => 'required',
         'taken'  => 'required',
-        'mentor'  => 'required',
-        'team'  => 'required'
+        'mentor'  => 'required'
         ]);
 
         if ($validator->fails()) {
