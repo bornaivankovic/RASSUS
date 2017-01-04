@@ -93,7 +93,7 @@ public class MyListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
@@ -109,7 +109,11 @@ public class MyListAdapter extends BaseExpandableListAdapter {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ThemeActivity.class));
+                Intent intent = new Intent(mContext, ThemeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("title", (String) getGroup(groupPosition));
+                intent.putExtra("child", childText);
+                mContext.startActivity(intent);
             }
         });
         return convertView;
