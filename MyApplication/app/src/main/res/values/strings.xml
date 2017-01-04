@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">RASSUS</string>
-    <string name="title_activity_browse">BrowseActivity</string>
+    <string name="title_activity_browse">Browse</string>
     <string name="title_activity_login">Sign in</string>
-    <string name="default_ip">192.168.1.11</string>
+    <string name="title_activity_theme">Settings</string>
+    <string name="default_ip">bornaivankovic.com</string>
     <string name="default_port">8000</string>
 
 
@@ -18,4 +19,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to browsing -->
+    <string name="settings_button">Theme settings</string>
 </resources>

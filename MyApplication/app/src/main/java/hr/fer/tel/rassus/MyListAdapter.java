@@ -1,13 +1,16 @@
 package hr.fer.tel.rassus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -22,45 +25,46 @@ import java.util.Objects;
 
 public class MyListAdapter extends BaseExpandableListAdapter {
 
-    private final ArrayList<HashMap<String, String>> list;
+    private final ArrayList<String> titles;
+    private final ArrayList<String> child;
     private final Context mContext;
 
     public MyListAdapter() {
         this.mContext = null;
-        this.list = new ArrayList<>();
+        this.titles = new ArrayList<>();
+        this.child = new ArrayList<>();
     }
 
-    public MyListAdapter(ArrayList<HashMap<String, String>> list, Context context) {
-        this.list = list;
+    public MyListAdapter(ArrayList<String> titles, ArrayList<String> child, Context context) {
+        this.titles = titles;
+        this.child = child;
         this.mContext = context;
     }
 
 
     @Override
     public int getGroupCount() {
-        return list.size();
+        return titles.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return list.get(i).size();
+        return 1;
     }
 
     @Override
     public Object getGroup(int i) {
-        return list.get(i).get("title");
+        return titles.get(i);
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        HashMap<String,String> tmp=list.get(i);
-        Object key=tmp.keySet().toArray()[i1];
-        return key+":\n"+tmp.get(key);
+        return child.get(i);
     }
 
     @Override
     public long getGroupId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -74,12 +78,10 @@ public class MyListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
         }
 
@@ -91,13 +93,11 @@ public class MyListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_item, null);
         }
 
@@ -105,6 +105,13 @@ public class MyListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+        Button settings = (Button) convertView.findViewById(R.id.settings_button);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ThemeActivity.class));
+            }
+        });
         return convertView;
     }
 
