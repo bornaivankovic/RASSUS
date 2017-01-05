@@ -1,3 +1,17 @@
 #addProject {
   padding: 10px 0px 15px 0px;
 }
+#addSection {
+  padding: 10px 0px 10px 0px;
+  background-color: #3B3B3A;
+  color: white;
+}
+
+#description {
+  margin: 15px 0px 15px 0px;
+  outline-color: orangered;
+}
+
+textarea:focus, input:focus{
+    outline-color: orangered;
+}

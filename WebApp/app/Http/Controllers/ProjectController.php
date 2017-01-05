@@ -42,7 +42,6 @@ class ProjectController extends Controller
       $rules = array(
         'title' => 'required',
         'description' => 'required',
-        'taken' => 'required',
         'size' => 'required',
         'mentor' => 'required',
       );
@@ -55,7 +54,7 @@ class ProjectController extends Controller
         $project = new Project();
         $project->title = $request->title;
         $project->description = $request->description;
-        $project->taken = $request->taken;
+        $project->taken = 0;
         $project->size = $request->size;
         $project->mentor = $request->mentor;
         if(isset($request->team)){
@@ -116,9 +115,31 @@ class ProjectController extends Controller
       return response()->json($project);
     }
 
-    public function apply(Request $request, $id)
+    public function apply(Request $request)
     {
-        //
+      $rules = array(
+        'team' => 'required',
+      );
+      // for Validator
+      $validator = Validator::make ( Input::all (), $rules );
+
+      if ($validator->fails())
+        return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+      else {
+        $project = Project::find($request->id);
+
+        if ($project->taken == 1) {
+          return Response::json(array('errors' => 'Projekt zauzet'));
+        } else {
+          $project->taken = 1;
+          $project->team = $request->team;
+        }
+
+        $project->save();
+
+        return response()->json($project);
+      }
+
     }
 
 

@@ -232,6 +232,8 @@
                               <table class="table table-borderless text-center" id="table">
                                 <tr>
                                   <th>Naslov</th>
+                                  <th>Mentor</th>
+                                  <th>Broj studenata</th>
                                   <th>Opis</th>
                                   <th>Akcije</th>
                                 </tr>
@@ -240,15 +242,22 @@
                                 @foreach($projects as $project)
                                   <tr class="item{{$project->id}}">
                                     <td>{{$project->title}}</td>
+                                    <td>{{$project->mentor}}</td>
+                                    <td>{{$project->size}}</td>
                                     <td>{{$project->description}}</td>
-                                    <td>
-                                    <button class="edit-modal btn btn-primary" data-id="{{$project->id}}" data-title="{{$project->title}}" data-description="{{$project->description}}" data-mentor="{{$project->mentor}}" data-size="{{$project->size}}" data-team="{{$project->team}}" data-taken="{{$project->taken}}">
-                                      <span class="glyphicon glyphicon-edit"></span> Uredi
-                                    </button>
-                                    <button class="delete-modal btn btn-danger" data-id="{{$project->id}}" data-title="{{$project->title}}" data-description="{{$project->description}}" data-mentor="{{$project->mentor}}" data-size="{{$project->size}}" data-team="{{$project->team}}" data-taken="{{$project->taken}}">
-                                      <span class="glyphicon glyphicon-trash"></span> Obriši
-                                    </button>
-                                  </td>
+                                    @if ($project->taken == 1)
+                                      <td>
+                                      <button disabled class="edit-modal btn btn-warning" data-id="{{$project->id}}" data-title="{{$project->title}}" data-description="{{$project->description}}" data-mentor="{{$project->mentor}}" data-size="{{$project->size}}" data-team="{{$project->team}}" data-taken="{{$project->taken}}">
+                                        <span class="glyphicon glyphicon-edit"></span> Zauzet
+                                      </button>
+                                    </td>
+                                    @else
+                                      <td>
+                                      <button class="edit-modal btn btn-success" data-id="{{$project->id}}" data-title="{{$project->title}}" data-description="{{$project->description}}" data-mentor="{{$project->mentor}}" data-size="{{$project->size}}" data-team="{{$project->team}}" data-taken="{{$project->taken}}">
+                                        <span class="glyphicon glyphicon-edit"></span> Prijavi
+                                      </button>
+                                    </td>
+                                    @endif
                                   </tr>
                                 @endforeach
                               </table>
@@ -274,19 +283,19 @@
                                     <div class="form-group">
                                       <label class="control-label col-sm-2" for="title">Naslov:</label>
                                       <div class="col-sm-10">
-                                        <input type="name" class="form-control" id="t">
+                                        <input type="name" class="form-control" id="t" disabled>
                                       </div>
                                     </div>
                                     <div class="form-group">
                                     <label class="control-label col-sm-2" for="mentor">Mentor:</label>
                                     <div class="col-sm-10">
-                                      <input type="name" class="form-control" id="mnt">
+                                      <input type="name" class="form-control" id="mnt" disabled>
                                     </div>
                                   </div>
                                   <div class="form-group">
                                   <label class="control-label col-sm-2" for="size">Broj studenata:</label>
                                   <div class="col-sm-10">
-                                    <input type="name" class="form-control" id="stnum">
+                                    <input type="name" class="form-control" id="stnum" disabled>
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -298,20 +307,17 @@
                                     <div class="form-group">
                                     <label class="control-label col-sm-2" for="description">Opis:</label>
                                     <div class="col-sm-10">
-                                      <input type="name" class="form-control" id="d">
+                                      <input type="name" class="form-control" id="d" disabled>
                                     </div>
                                   </div>
                                   </form>
-                                    <div class="deleteContent">
-                                    Jeste li sigurni da želite obrisati <span class="title"></span> ?
-                                    <span class="hidden id"></span>
-                                  </div>
+
                                   <div class="modal-footer">
                                     <button type="button" class="btn actionBtn" data-dismiss="modal">
                                       <span id="footer_action_button" class='glyphicon'> </span>
                                     </button>
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                      <span class='glyphicon glyphicon-remove'></span> Zatvori
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                      <span class='glyphicon glyphicon-remove'></span> Odustani
                                     </button>
                                   </div>
                                 </div>
@@ -449,15 +455,16 @@
     <!-- AdminLTE for demo purposes -->
     <script src="js/demo.js"></script>
     <script type="text/javascript">
+
     // Edit Data (Modal and function edit data)
     $(document).on('click', '.edit-modal', function() {
-    $('#footer_action_button').text(" Ažuriraj");
+    $('#footer_action_button').text("Prijavi");
     $('#footer_action_button').addClass('glyphicon-check');
     $('#footer_action_button').removeClass('glyphicon-trash');
     $('.actionBtn').addClass('btn-success');
     $('.actionBtn').removeClass('btn-danger');
     $('.actionBtn').addClass('edit');
-    $('.modal-title').text('Uređivanje');
+    $('.modal-title').text('Prijava');
     $('.deleteContent').hide();
     $('.form-horizontal').show();
     $('#fid').val($(this).data('id'));
@@ -471,51 +478,18 @@
   $('.modal-footer').on('click', '.edit', function() {
   $.ajax({
       type: 'post',
-      url: '/editItem',
+      url: '/applyItem',
       data: {
           '_token': $('input[name=_token]').val(),
           'id': $('#fid').val(),
-          'title': $('#t').val(),
-          'description': $('#d').val(),
-          'mentor': $('#mnt').val(),
-          'size': $('#stnum').val(),
-          'team': $('#std').val()
+          'team': $('#std').val(),
       },
       success: function(data) {
-        $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.title + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-edit'></span> Uredi</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-trash'></span> Obriši</button></td></tr>");
+        alert('Uspješna prijava')
       }
   });
 });
 
-//delete function
-$(document).on('click', '.delete-modal', function() {
-  $('#footer_action_button').text(" Obriši");
-  $('#footer_action_button').removeClass('glyphicon-check');
-  $('#footer_action_button').addClass('glyphicon-trash');
-  $('.actionBtn').removeClass('btn-success');
-  $('.actionBtn').addClass('btn-danger');
-  $('.actionBtn').addClass('delete');
-  $('.modal-title').text('Obriši');
-  $('.id').text($(this).data('id'));
-  $('.deleteContent').show();
-  $('.form-horizontal').hide();
-  $('.title').html($(this).data('title'));
-  $('#myModal').modal('show');
-});
-
-$('.modal-footer').on('click', '.delete', function() {
-  $.ajax({
-    type: 'post',
-    url: '/deleteItem',
-    data: {
-      '_token': $('input[name=_token]').val(),
-      'id': $('.id').text()
-    },
-    success: function(data) {
-      $('.item' + $('.id').text()).remove();
-    }
-  });
-});
 
 </script>
 </body>

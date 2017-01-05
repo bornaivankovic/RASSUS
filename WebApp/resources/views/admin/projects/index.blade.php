@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h1>Dodavanje projekata</h1>
+      <h3>Dodavanje projekata</h3>
     </div>
   </div>
 

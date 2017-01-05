@@ -228,45 +228,48 @@
                 <!-- /.row -->
                 <!-- Main row -->
                 <div class="row">
-                  <section class="col-lg-12 text-center">
-                    <div class="col-lg-12">
-                      <div class="nav-tabs-custom text-center" id="addProject">
-                        <h3><b>Kreiranje projekta</b></h3>
-                        <form class="form-horizontal text-center">
-                          <div class="form-group text-center">
-                            <label for="project-title" class="col-sm-2 control-label">Naslov : </label>
-                            <div class="col-lg-5">
-                              <input type="text" class="form-control" id="project-title" placeholder="Naslov projekta">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="project-mentor" class="col-lg-2 control-label">Mentor : </label>
-                            <div class="col-lg-5">
-                              <input type="text" class="form-control" id="project-mentor" placeholder="Ime mentora">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="project-size" class="col-sm-2 control-label">Broj studenata : </label>
-                            <div class="col-sm-2">
-                              <input type="text" class="form-control" id="project-size" placeholder="Broj studenata">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label for="project-description" class="col-sm-2 control-label">Opis projekta : </label>
-                            <div class="col-sm-5">
-                              <textarea type="text" rows="6" class="form-control" id="project-description" placeholder="Opis"></textarea>
-                            </div>
-                          </div>
 
-                          <button class="edit-modal btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> Dodaj
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </section>
                     <!-- Left col -->
                     <section class="col-lg-12 text-center">
+                      <div class="nav-tabs-custom" id="addSection">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <h3><b>Dodavanje projekata</b></h3>
+                          </div>
+                        </div>
+
+                        <div class="form-group row add">
+                          <div class="col-md-3 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                            <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Naslov" required>
+                            <p class="error text-center alert alert-danger hidden"></p>
+                          </div>
+                          <div class="col-md-3 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                            <input type="text" class="form-control" id="mentor" name="mentor"
+                            placeholder="Mentor" required>
+                            <p class="error text-center alert alert-danger hidden"></p>
+                          </div>
+                          <div class="col-md-2 col-md-offset-1 col-sm-10 col-sm-offset-1">
+                            <input type="text" class="form-control" id="size" name="size"
+                            placeholder="Broj studenata" required>
+                            <p class="error text-center alert alert-danger hidden"></p>
+                          </div>
+                          <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
+                            <textarea rows="6" type="text" class="form-control" id="description" name="description"
+                            placeholder="Opis projekta" required></textarea>
+                            <p class="error text-center alert alert-danger hidden"></p>
+                          </div>
+
+
+                          <div class="col-md-12 text-center">
+                            <button class="btn btn-success" type="submit" id="add">
+                              <span class="glyphicon glyphicon-plus"></span> Dodaj novi projekt
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+
                         <!-- Custom tabs (Charts with tabs)-->
                         <div class="nav-tabs-custom">
                             <div class="table-responsive">
@@ -542,6 +545,41 @@ $(document).on('click', '.delete-modal', function() {
   $('.form-horizontal').hide();
   $('.title').html($(this).data('title'));
   $('#myModal').modal('show');
+});
+
+// add function
+$(document).on('click', '#add', function(e) {
+  console.log($('input[name=title]').val());
+  console.log($('input[name=description]').val());
+  console.log($('input[name=mentor]').val());
+  console.log($('input[name=size]').val());
+  $.ajax({
+    type: 'post',
+    url: '/addItem',
+    data: {
+      '_token': $('input[name=_token]').val(),
+      'title': $('input[name=title]').val(),
+      'description': $('#description').val(),
+      'mentor': $('input[name=mentor]').val(),
+      'size': $('input[name=size]').val()
+    },
+    success: function(data) {
+      if ((data.errors)) {
+        $('.error').removeClass('hidden');
+        $('.error').text(data.errors.title);
+        $('.error').text(data.errors.description);
+        $('.error').text(data.errors.mentor);
+        $('.error').text(data.errors.size);
+      } else {
+        $('.error').remove();
+        $('#table').append("<tr class='item" + data.id + "'><td>" + data.title + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-warning' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-edit'></span> Uredi</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-trash'></span> Obriši</button></td></tr>");
+      }
+    },
+  });
+  $('#title').val('');
+  $('#description').val('');
+  $('#mentor').val('');
+  $('#size').val('');
 });
 
 $('.modal-footer').on('click', '.delete', function() {
