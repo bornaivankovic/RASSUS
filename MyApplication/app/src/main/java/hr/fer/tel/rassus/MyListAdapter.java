@@ -28,16 +28,19 @@ public class MyListAdapter extends BaseExpandableListAdapter {
     private final ArrayList<String> titles;
     private final ArrayList<String> child;
     private final Context mContext;
+    private final JsonParser parser;
 
     public MyListAdapter() {
         this.mContext = null;
         this.titles = new ArrayList<>();
         this.child = new ArrayList<>();
+        this.parser = null;
     }
 
-    public MyListAdapter(ArrayList<String> titles, ArrayList<String> child, Context context) {
-        this.titles = titles;
-        this.child = child;
+    public MyListAdapter(JsonParser parser, Context context) {
+        this.parser = parser;
+        this.titles = parser.getTitles();
+        this.child = parser.JSONtoStringArray();
         this.mContext = context;
     }
 
@@ -111,8 +114,7 @@ public class MyListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("title", (String) getGroup(groupPosition));
-                intent.putExtra("child", childText);
+                intent.putExtra("map", parser.getObject(groupPosition));
                 mContext.startActivity(intent);
             }
         });

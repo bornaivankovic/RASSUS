@@ -22,4 +22,6 @@
 
     <!-- Strings related to browsing -->
     <string name="settings_button">Theme settings</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
 </resources>

@@ -64,4 +64,29 @@ public class JsonParser {
         }
         return res;
     }
+
+    public ArrayList<String> JSONtoStringArray() {
+        ArrayList<String> child = new ArrayList<String>();
+        String tmp = "";
+        for(HashMap<String, String> map : this.parse()) {
+            tmp = "";
+            for(String txt : map.keySet()) {
+                tmp = tmp + txt + ":\n" + map.get(txt) + "\n\n";
+            }
+            child.add(tmp);
+        }
+        return child;
+    }
+
+    public ArrayList<String> getTitles() {
+        ArrayList<String> titles = new ArrayList<String>();
+        for(HashMap<String, String> map : this.parse()) {
+            titles.add(map.get("title"));
+        }
+        return titles;
+    }
+
+    public HashMap<String, String> getObject(int i) {
+        return this.parse().get(i);
+    }
 }
