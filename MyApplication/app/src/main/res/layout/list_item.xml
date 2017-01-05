@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         android:text="@string/settings_button"
         android:id="@+id/settings_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick=""/>
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
