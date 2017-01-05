@@ -41,19 +41,26 @@ class ProjectController extends Controller
 
       $rules = array(
         'title' => 'required',
-        'description' => 'required'
+        'description' => 'required',
+        'taken' => 'required',
+        'size' => 'required',
+        'mentor' => 'required',
       );
       // for Validator
       $validator = Validator::make ( Input::all (), $rules );
-      
+
       if ($validator->fails())
         return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
       else {
         $project = new Project();
         $project->title = $request->title;
         $project->description = $request->description;
-        $project->taken = 0;
-        $project->size = 5;
+        $project->taken = $request->taken;
+        $project->size = $request->size;
+        $project->mentor = $request->mentor;
+        if(isset($request->team)){
+          $project->team = $request->team;
+        }
 
         $project->save();
 
@@ -95,12 +102,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request)
     {
-      $project = Project::find($request->id)->first();
+      $project = Project::find($request->id);
 
       $project->title = $request->title;
       $project->description = $request->description;
-      $project->taken = 0;
-      $project->size = 5;
+      $project->taken = $request->taken;
+      $project->size = $request->size;
+      $project->mentor = $request->mentor;
+      $project->team = $request->team;
 
       $project->save();
 

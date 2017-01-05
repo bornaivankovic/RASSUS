@@ -30,7 +30,6 @@
     <div class="table-responsive">
       <table class="table table-borderless" id="table">
         <tr>
-          <th>No.</th>
           <th>Naslov</th>
           <th>Opis</th>
           <th>Akcije</th>

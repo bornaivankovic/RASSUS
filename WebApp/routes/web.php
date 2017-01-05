@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,26 @@ Route::get('home', function () {
 
 
 Route::get('admin', function () {
-    return view('admin.index');
+    $user_num = App\User::where('admin', 0)->count();
+    $project_num = DB::table('projects')->count();
+    $users = App\User::where('admin', 0)->paginate(8, ['*'], 'users');
+
+    $projects = App\Project::paginate(4, ['*'], 'projects');
+    $projects_taken = App\Project::where('taken', 1)->count();
+    $project_stat = 0;
+    if ($projects_taken == 0) {
+      $project_stat = 0;
+    } else {
+      $project_stat = ($projects_taken/$project_num)*100;
+    }
+
+    return view('admin.index', [
+      'user_num' => $user_num,
+      'project_num' => $project_num,
+      'project_stat' => $project_stat,
+      'users' => $users,
+      'projects' => $projects,
+    ]);
 })->middleware('authAdmin');
 
 Route::get('user', function () {
