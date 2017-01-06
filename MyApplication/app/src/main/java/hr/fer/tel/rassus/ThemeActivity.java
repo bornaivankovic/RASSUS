@@ -9,16 +9,26 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class ThemeActivity extends AppCompatActivity {
     private HashMap<String, String> theme = new HashMap<String, String>();
+    private JSONObject object;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme);
+
         this.theme = (HashMap<String, String>) getIntent().getSerializableExtra("map");
+        try {
+            object = new JSONObject(getIntent().getStringExtra("object"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         TextView textView = (TextView) findViewById(R.id.theme_title);
         TextView textView1 = (TextView) findViewById(R.id.theme_description);

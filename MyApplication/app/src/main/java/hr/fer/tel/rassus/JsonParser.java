@@ -18,8 +18,10 @@ public class JsonParser {
 
     private JSONArray array;
     private JSONObject object;
+    private String output;
 
     public JsonParser(String str){
+        this.output = str;
         try {
             if(str.startsWith("["))
                 this.array=new JSONArray(str);
@@ -88,5 +90,9 @@ public class JsonParser {
 
     public HashMap<String, String> getObject(int i) {
         return this.parse().get(i);
+    }
+
+    public String getOutput() {
+        return output;
     }
 }

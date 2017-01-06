@@ -15,6 +15,9 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -112,9 +115,18 @@ public class MyListAdapter extends BaseExpandableListAdapter {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                JSONArray array = null;
+                String objectString = null;
+                try {
+                    array = new JSONArray(parser.getOutput());
+                    objectString = array.get(groupPosition).toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("map", parser.getObject(groupPosition));
+                intent.putExtra("object", objectString);
                 mContext.startActivity(intent);
 
             }

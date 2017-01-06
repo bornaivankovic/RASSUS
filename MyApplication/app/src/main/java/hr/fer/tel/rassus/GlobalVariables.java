@@ -2,6 +2,9 @@ package hr.fer.tel.rassus;
 
 import android.app.Application;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * Created by Fika on 6.1.2017..
  */
@@ -12,6 +15,8 @@ public class GlobalVariables extends Application {
     private boolean isAdmin;
     private String host;
     private String uri;
+    private JSONArray array;
+    private JSONObject object;
 
     public GlobalVariables() {
     }
@@ -51,5 +56,21 @@ public class GlobalVariables extends Application {
 
     public String getUri() {
         return uri;
+    }
+
+    public JSONArray getArray() {
+        return array;
+    }
+
+    public void setArray(JSONArray array) {
+        this.array = array;
+    }
+
+    public JSONObject getObject() {
+        return object;
+    }
+
+    public void setObject(JSONObject object) {
+        this.object = object;
     }
 }
