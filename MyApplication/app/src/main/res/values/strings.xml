@@ -24,4 +24,13 @@
     <string name="settings_button">Theme settings</string>
     <string name="edit_button">Edit</string>
     <string name="delete_button">Delete</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title_hostname">Hostname</string>
+    <string name="pref_default_hostname">bornaivankovic.com</string>
+    <string name="pref_title_port">Port</string>
+    <string name="pref_default_port">8000</string>
+    <string name="pref_header_general">General</string>
+
 </resources>
