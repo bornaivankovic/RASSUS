@@ -17,7 +17,7 @@ public class GlobalVariables extends Application {
     private JSONObject object;
 
     public GlobalVariables() {
-        this.email = "admin";
+        this.email = "admin@admin.com";
         this.password = "lozinka";
     }
 

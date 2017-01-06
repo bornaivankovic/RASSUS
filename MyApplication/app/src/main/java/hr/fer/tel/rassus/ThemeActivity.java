@@ -43,7 +43,9 @@ public class ThemeActivity extends AppCompatActivity {
     }
 
     public void edit(View view) {
-
+        Intent intent = new Intent(ThemeActivity.this, EditActivity.class);
+        intent.putExtra("object", this.object.toString());
+        startActivity(intent);
     }
 
     public void delete(View view) {

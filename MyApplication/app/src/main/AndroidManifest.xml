@@ -32,10 +32,14 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ThemeActivity"
-            android:label="@string/title_activity_theme" />
+            android:label="@string/title_activity_theme"
+            android:noHistory="true"/>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".EditActivity"
+            android:label="@string/edit_button"/>
     </application>
 
 </manifest>
