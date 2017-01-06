@@ -116,6 +116,7 @@ public class MyListAdapter extends BaseExpandableListAdapter {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("map", parser.getObject(groupPosition));
                 mContext.startActivity(intent);
+
             }
         });
         return convertView;
