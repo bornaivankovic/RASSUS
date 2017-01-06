@@ -43,7 +43,10 @@ public class BrowseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String hostname = ((GlobalVariables) this.getApplication()).getHost();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String host=sharedPref.getString("hostname","");
+        String port=sharedPref.getString("port","");
+        String hostname = host+":"+port;
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {

@@ -13,13 +13,10 @@ public class GlobalVariables extends Application {
     private String email;
     private String password;
     private boolean isAdmin;
-    private String host;
-    private String uri;
     private JSONArray array;
     private JSONObject object;
 
     public GlobalVariables() {
-        setHost("bornaivankovic.com:8000");
         this.email = "admin";
         this.password = "lozinka";
     }
@@ -46,19 +43,6 @@ public class GlobalVariables extends Application {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-        this.uri = "http://" + host + "/api/v0.2/projects";
-    }
-
-    public String getUri() {
-        return uri;
     }
 
     public JSONArray getArray() {
