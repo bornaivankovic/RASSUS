@@ -1,6 +1,8 @@
 package hr.fer.tel.rassus;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -45,7 +47,10 @@ public class ThemeActivity extends AppCompatActivity {
     }
 
     public void delete(View view) {
-        String host = ((GlobalVariables) this.getApplication()).getHost();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String host=sharedPref.getString("hostname","");
+        String port=sharedPref.getString("port","");
+        String hostname = host+":"+port;
         String email = ((GlobalVariables) this.getApplication()).getEmail();
         String password = ((GlobalVariables) this.getApplication()).getPassword();
         DeleteAction deleteAction= (DeleteAction) new DeleteAction(new DeleteAction.AsyncResponse() {
@@ -53,6 +58,6 @@ public class ThemeActivity extends AppCompatActivity {
             public void processFinish(String output) {
                 finish();
             }
-        }).execute("http://" + host + "/api/v0.2/projects/" + theme.get("id"), email, password);
+        }).execute("http://" + hostname + "/api/v0.2/projects/" + theme.get("id"), email, password);
     }
 }
