@@ -22,6 +22,9 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String hostname=getIntent().getStringExtra("hostname");
+        ((GlobalVariables) this.getApplication()).setHost(hostname);
+        ((GlobalVariables) this.getApplication()).setEmail("admin");
+        ((GlobalVariables) this.getApplication()).setPassword("lozinka");
 
 
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
@@ -35,4 +38,18 @@ public class BrowseActivity extends AppCompatActivity {
         }).execute("http://"+hostname+"/api/v0.2/projects");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String hostname = ((GlobalVariables) this.getApplication()).getHost();
+        GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                JsonParser parser=new JsonParser(output);
+                ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
+                listView.setAdapter(new MyListAdapter(parser, getApplicationContext()));
+
+            }
+        }).execute("http://"+hostname+"/api/v0.2/projects");
+    }
 }

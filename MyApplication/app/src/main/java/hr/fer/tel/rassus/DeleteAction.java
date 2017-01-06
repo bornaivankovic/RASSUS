@@ -1,27 +1,32 @@
 package hr.fer.tel.rassus;
 
-import android.util.Base64;
+import android.os.AsyncTask;
 
 /**
- * Created by Fika on 5.1.2017..
+ * Created by Borna Ivankovic on 14.12.2016..
  */
 
-public class DeleteAction {
-    private String url;
-    private String username;
-    private String pass;
-    private int id;
+public class DeleteAction extends AsyncTask<String,Void,String> {
 
-    public DeleteAction(String url, String username, String pass, int id) {
-        this.url = url;
-        this.username = username;
-        this.pass = pass;
-        this.id = id;
+    public  interface AsyncResponse{
+        void processFinish(String output);
     }
 
-    private String getB64Auth() {
-        String source=username+":"+pass;
-        String ret="Basic "+ Base64.encodeToString(source.getBytes(),Base64.URL_SAFE|Base64.NO_WRAP);
-        return ret;
+    public AsyncResponse delegate = null;
+
+    public DeleteAction(AsyncResponse delegate){
+        this.delegate=delegate;
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        HttpDeleteHandler handler = new HttpDeleteHandler(strings[0], strings[1], strings[2]);
+        String json = handler.makeServiceCall();
+        return json;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        delegate.processFinish(s);
     }
 }

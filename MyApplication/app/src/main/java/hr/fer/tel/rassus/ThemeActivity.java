@@ -3,6 +3,7 @@ package hr.fer.tel.rassus;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -34,6 +35,14 @@ public class ThemeActivity extends AppCompatActivity {
     }
 
     public void delete(View view) {
-
+        String host = ((GlobalVariables) this.getApplication()).getHost();
+        String email = ((GlobalVariables) this.getApplication()).getEmail();
+        String password = ((GlobalVariables) this.getApplication()).getPassword();
+        DeleteAction deleteAction= (DeleteAction) new DeleteAction(new DeleteAction.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                finish();
+            }
+        }).execute("http://" + host + "/api/v0.2/projects/" + theme.get("id"), email, password);
     }
 }
