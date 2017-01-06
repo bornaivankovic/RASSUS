@@ -33,51 +33,16 @@
         android:layout_alignStart="@+id/browse_button"
         android:layout_marginTop="14dp" />
 
-    <EditText
+    <Button
+        android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="@string/default_port"
-        android:ems="10"
-        android:id="@+id/hostPort"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/hostIP"
-        android:layout_alignLeft="@+id/hostIP"
-        android:layout_alignStart="@+id/hostIP" />
-
-    <TextView
-        android:text="Port:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_alignBaseline="@+id/hostPort"
-        android:layout_alignBottom="@+id/hostPort"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        />
-
-    <TextView
-        android:text="Host:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/browse_button"
-        android:layout_alignStart="@+id/browse_button" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="@string/default_ip"
-        android:ems="10"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
-        android:id="@+id/hostIP"
-        android:layout_alignBaseline="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_alignTop="@+id/browse_button"
+        android:layout_toRightOf="@+id/browse_button"
+        android:layout_toEndOf="@+id/browse_button"
+        android:layout_marginLeft="41dp"
+        android:layout_marginStart="41dp"
+        android:id="@+id/button"
+        android:onClick="settings" />
 
 </RelativeLayout>
