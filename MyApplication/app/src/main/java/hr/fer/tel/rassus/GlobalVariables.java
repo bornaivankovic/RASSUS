@@ -19,6 +19,9 @@ public class GlobalVariables extends Application {
     private JSONObject object;
 
     public GlobalVariables() {
+        setHost("bornaivankovic.com:8000");
+        this.email = "admin";
+        this.password = "lozinka";
     }
 
     public String getEmail() {

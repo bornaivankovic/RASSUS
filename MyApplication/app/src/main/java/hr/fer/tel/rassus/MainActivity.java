@@ -1,27 +1,9 @@
 package hr.fer.tel.rassus;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ListViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewParent;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,12 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void browse(View view){
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String host=sharedPref.getString("hostname","");
-        String port=sharedPref.getString("port","");
         Intent intent = new Intent(MainActivity.this,BrowseActivity.class);
-        String hostname=host+":"+port;
-        intent.putExtra("hostname",hostname);
         startActivity(intent);
     }
 

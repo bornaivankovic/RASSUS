@@ -21,10 +21,7 @@ public class BrowseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_browse);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String hostname=getIntent().getStringExtra("hostname");
-        ((GlobalVariables) this.getApplication()).setHost(hostname);
-        ((GlobalVariables) this.getApplication()).setEmail("admin");
-        ((GlobalVariables) this.getApplication()).setPassword("lozinka");
+        String hostname = ((GlobalVariables) this.getApplication()).getHost();
 
 
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
