@@ -33,13 +33,19 @@
         <activity
             android:name=".ThemeActivity"
             android:label="@string/title_activity_theme"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".EditActivity"
-            android:label="@string/edit_button"/>
+            android:label="@string/edit_button" />
+        <activity
+            android:name=".BrowseAdminActivity"
+            android:label="Browse"/>
+        <activity
+            android:name=".PostActivity"
+            android:label="Post new project"></activity>
     </application>
 
 </manifest>

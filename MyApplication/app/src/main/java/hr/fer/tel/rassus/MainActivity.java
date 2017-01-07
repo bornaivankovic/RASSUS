@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-
+    public void adminbrowse(View view) {
+        Intent intent = new Intent(MainActivity.this, BrowseAdminActivity.class);
+        startActivity(intent);
+    }
 }

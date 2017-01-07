@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,41 +8,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="hr.fer.tel.rassus.MainActivity">
 
     <Button
         android:text="Browse"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/browse_button"
-        android:onClick="browse"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp" />
+        android:onClick="browse"/>
+
+    <Button
+        android:text="Admin Browse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="adminbrowse"/>
 
     <Button
         android:text="Login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login_button"
-        android:onClick="login"
-        android:layout_below="@+id/browse_button"
-        android:layout_alignLeft="@+id/browse_button"
-        android:layout_alignStart="@+id/browse_button"
-        android:layout_marginTop="14dp" />
+        android:onClick="login" />
 
     <Button
         android:text="Button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/browse_button"
-        android:layout_toRightOf="@+id/browse_button"
-        android:layout_toEndOf="@+id/browse_button"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
         android:id="@+id/button"
         android:onClick="settings" />
 
-</RelativeLayout>
+</LinearLayout>

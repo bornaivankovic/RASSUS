@@ -32,6 +32,7 @@
     <string name="edit_done">Done</string>
     <string name="edit_team">Team</string>
     <string name="edit_mentor">Mentor</string>
+    <string name="post_button">Post new project</string>
 
     <!-- Strings related to Settings -->
     <string name="pref_title_hostname">Hostname</string>
