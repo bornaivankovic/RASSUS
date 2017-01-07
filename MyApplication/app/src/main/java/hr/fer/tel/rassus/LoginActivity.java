@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password,((GlobalVariables) this.getApplication()));
             mAuthTask.execute((Void) null);
         }
     }
@@ -308,10 +308,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final GlobalVariables g;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, GlobalVariables application) {
             mEmail = email;
             mPassword = password;
+            g=application;
         }
 
         @Override
@@ -349,6 +351,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             USER_AUTH_LEVELS.put("test@test.com", "user");
 
             if (success) {
+                g.setEmail(mEmail);
+                g.setPassword(mPassword);
                 String auth=USER_AUTH_LEVELS.get(mEmail);
                 if(auth.equals("user")){
                     browse(findViewById(R.id.content_browse));
