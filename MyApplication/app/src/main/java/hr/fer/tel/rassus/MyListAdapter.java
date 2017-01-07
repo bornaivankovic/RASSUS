@@ -32,19 +32,27 @@ public class MyListAdapter extends BaseExpandableListAdapter {
     private final ArrayList<String> child;
     private final Context mContext;
     private final JsonParser parser;
+    private JSONArray array;
 
     public MyListAdapter() {
         this.mContext = null;
         this.titles = new ArrayList<>();
         this.child = new ArrayList<>();
         this.parser = null;
+        this.array = new JSONArray();
     }
 
-    public MyListAdapter(JsonParser parser, Context context) {
-        this.parser = parser;
+    public MyListAdapter(String stringArray, Context context) {
+        this.mContext = context;
+        this.parser = new JsonParser(stringArray);
         this.titles = parser.getTitles();
         this.child = parser.JSONtoStringArray();
-        this.mContext = context;
+        this.array = null;
+        try {
+            this.array = new JSONArray(stringArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -115,10 +123,8 @@ public class MyListAdapter extends BaseExpandableListAdapter {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONArray array = null;
                 String objectString = null;
                 try {
-                    array = new JSONArray(parser.getOutput());
                     objectString = array.get(groupPosition).toString();
                 } catch (JSONException e) {
                     e.printStackTrace();

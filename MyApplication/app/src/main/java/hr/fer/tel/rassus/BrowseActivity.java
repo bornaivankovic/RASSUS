@@ -32,9 +32,8 @@ public class BrowseActivity extends AppCompatActivity {
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                JsonParser parser=new JsonParser(output);
                 ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
-                listView.setAdapter(new MyListAdapter(parser, getApplicationContext()));
+                listView.setAdapter(new MyListAdapter(output, getApplicationContext()));
 
             }
         }).execute("http://"+hostname+"/api/v0.2/projects");
@@ -50,9 +49,8 @@ public class BrowseActivity extends AppCompatActivity {
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                JsonParser parser=new JsonParser(output);
                 ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
-                listView.setAdapter(new MyListAdapter(parser, getApplicationContext()));
+                listView.setAdapter(new MyListAdapter(output, getApplicationContext()));
 
             }
         }).execute("http://"+hostname+"/api/v0.2/projects");

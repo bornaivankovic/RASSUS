@@ -32,19 +32,51 @@
             android:layout_marginTop="10dp"
             android:id="@+id/theme_description" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_mentor"
+            android:layout_below="@+id/theme_description"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_mentor"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/theme_taken"
+            android:layout_below="@+id/theme_size"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_taken"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_team" />
+
         <Button
             android:text="@string/edit_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_button"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/theme_description"
-            android:layout_centerHorizontal="true"
-            android:onClick="edit"/>
+            android:onClick="edit"
+            android:layout_below="@+id/theme_team"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:text="@string/delete_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_button"
             android:layout_alignLeft="@+id/edit_button"

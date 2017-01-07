@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class ThemeActivity extends AppCompatActivity {
     private HashMap<String, String> theme = new HashMap<String, String>();
     private JSONObject object;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +29,22 @@ public class ThemeActivity extends AppCompatActivity {
         this.theme = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         try {
             object = new JSONObject(getIntent().getStringExtra("object"));
+            TextView themeTitle = (TextView) findViewById(R.id.theme_title);
+            TextView themeDescription = (TextView) findViewById(R.id.theme_description);
+            TextView themeMentor = (TextView) findViewById(R.id.theme_mentor);
+            TextView themeSize = (TextView) findViewById(R.id.theme_size);
+            TextView themeTaken = (TextView) findViewById(R.id.theme_taken);
+            TextView themeTeam = (TextView) findViewById(R.id.theme_team);
+            themeTitle.setText(object.getString("title"));
+            themeDescription.setText(object.getString("description"));
+            themeMentor.setText(object.getString("mentor"));
+            themeSize.setText(object.getString("size"));
+            themeTaken.setText(object.getString("taken"));
+            themeTeam.setText(object.getString("team"));
+            id = object.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        TextView textView = (TextView) findViewById(R.id.theme_title);
-        TextView textView1 = (TextView) findViewById(R.id.theme_description);
-        textView.setText(theme.get("title"));
-        String desc = "";
-        for(String str : theme.keySet()) {
-            desc += str + ":\n" + theme.get(str) + "\n\n";
-        }
-        textView1.setText(desc);
     }
 
     public void edit(View view) {
@@ -60,6 +65,6 @@ public class ThemeActivity extends AppCompatActivity {
             public void processFinish(String output) {
                 finish();
             }
-        }).execute("http://" + hostname + "/api/v0.2/projects/" + theme.get("id"), email, password);
+        }).execute("http://" + hostname + "/api/v0.2/projects/" + id, email, password);
     }
 }
