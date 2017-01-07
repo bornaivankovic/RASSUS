@@ -16,7 +16,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,19 +34,14 @@
         <activity
             android:name=".ThemeActivity"
             android:label="@string/title_activity_theme"
-            android:noHistory="true" />
+            android:parentActivityName=".MainActivity"
+            android:noHistory="true"/>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".EditActivity"
-            android:label="@string/edit_button" />
-        <activity
-            android:name=".BrowseAdminActivity"
-            android:label="Browse"/>
-        <activity
-            android:name=".PostActivity"
-            android:label="Post new project"></activity>
+            android:label="@string/edit_button"/>
     </application>
 
 </manifest>

@@ -40,5 +40,6 @@
     <string name="pref_title_port">Port</string>
     <string name="pref_default_port">8000</string>
     <string name="pref_header_general">General</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
