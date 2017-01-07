@@ -34,7 +34,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -53,8 +55,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world", "admin@admin.com:lozinka",
+            "test@test.com:testerino"
     };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -338,8 +342,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            Map<String,String> USER_AUTH_LEVELS=new HashMap<String,String>();
+            USER_AUTH_LEVELS.put("foo@example.com", "user");
+            USER_AUTH_LEVELS.put("bar@example.com", "user");
+            USER_AUTH_LEVELS.put("admin@admin.com", "admin");
+            USER_AUTH_LEVELS.put("test@test.com", "user");
+
             if (success) {
-                finish();
+                String auth=USER_AUTH_LEVELS.get(mEmail);
+                if(auth.equals("user")){
+                    browse(findViewById(R.id.content_browse));
+                }
+                else if(auth.equals("admin")){
+                    adminbrowse(findViewById(R.id.activity_browse_admin));
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
