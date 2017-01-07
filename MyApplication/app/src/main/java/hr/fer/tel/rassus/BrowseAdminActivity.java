@@ -27,7 +27,6 @@ public class BrowseAdminActivity extends AppCompatActivity {
                 JsonParser parser=new JsonParser(output);
                 ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
                 listView.setAdapter(new MyListAdapter(parser, getApplicationContext()));
-
             }
         }).execute("http://"+hostname+"/api/v0.2/projects");
     }

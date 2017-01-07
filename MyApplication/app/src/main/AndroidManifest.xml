@@ -42,6 +42,10 @@
         <activity
             android:name=".EditActivity"
             android:label="@string/edit_button"/>
+        <activity android:name=".BrowseAdminActivity"
+            android:label="@string/title_activity_browse"/>
+        <activity android:name=".PostActivity"
+            android:label="Post new project"/>
     </application>
 
 </manifest>

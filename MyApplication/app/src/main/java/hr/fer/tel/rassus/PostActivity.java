@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +45,8 @@ public class PostActivity extends AppCompatActivity {
         String port=sharedPref.getString("port","");
         String hostname = host+":"+port;
 
+        JSONArray array = new JSONArray().put(object);
+
         String email = ((GlobalVariables) this.getApplication()).getEmail();
         String password = ((GlobalVariables) this.getApplication()).getPassword();
         PostAction postAction= (PostAction) new PostAction(new PostAction.AsyncResponse() {
@@ -51,6 +54,6 @@ public class PostActivity extends AppCompatActivity {
             public void processFinish(String output) {
                 finish();
             }
-        }).execute("http://"+hostname+"/api/v0.2/projects/", email, password, object.toString());
+        }).execute("http://"+hostname+"/api/v0.2/projects/", email, password, array.toString());
     }
 }
