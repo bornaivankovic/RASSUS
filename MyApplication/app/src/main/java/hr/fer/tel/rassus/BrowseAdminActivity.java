@@ -21,13 +21,13 @@ public class BrowseAdminActivity extends AppCompatActivity {
         String hostname = host+":"+port;
 
 
-        GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
-            @Override
-            public void processFinish(String output) {
-                ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
-                listView.setAdapter(new MyListAdapter(output, getApplicationContext()));
-            }
-        }).execute("http://"+hostname+"/api/v0.2/projects");
+//        GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
+//            @Override
+//            public void processFinish(String output) {
+//                ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
+//                listView.setAdapter(new MyListAdapter(output, getApplicationContext()));
+//            }
+//        }).execute("http://"+hostname+"/api/v0.2/projects");
     }
 
     public void post(View view) {

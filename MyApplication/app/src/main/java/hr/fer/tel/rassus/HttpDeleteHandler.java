@@ -48,12 +48,19 @@ public class HttpDeleteHandler {
             String userpass = email + ":" + password;
             String basicAuth = "Basic " + Base64.encodeToString(userpass.getBytes(), 0);
             URL url = new URL(reqUrl);
+            System.setProperty("http.keepAlive","false");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty ("Authorization", basicAuth);
             conn.setRequestMethod("DELETE");
             // read the response
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            response = convertStreamToString(in);
+            try {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                response = convertStreamToString(in);
+            }
+            finally {
+                conn.disconnect();
+            }
+
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {

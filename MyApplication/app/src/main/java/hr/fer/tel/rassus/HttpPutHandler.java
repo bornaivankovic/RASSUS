@@ -59,10 +59,14 @@ public class HttpPutHandler {
             String str = stringObject;
             byte[] outputInBytes = str.getBytes("UTF-8");
             conn.getOutputStream().write(outputInBytes);
-            conn.connect();
             // read the response
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            response = convertStreamToString(in);
+            try {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                response = convertStreamToString(in);
+            }
+            finally {
+                conn.disconnect();
+            }
         } catch (MalformedURLException e) {
             Log.e(TAG, "MalformedURLException: " + e.getMessage());
         } catch (ProtocolException e) {

@@ -58,8 +58,9 @@ public class PostActivity extends AppCompatActivity {
         PostAction postAction= (PostAction) new PostAction(new PostAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                TextView textView = (TextView) findViewById(R.id.theme_posted);
-                textView.setText("Project posted!");
+//                TextView textView = (TextView) findViewById(R.id.theme_posted);
+//                textView.setText("Project posted!");
+                finish();
             }
         }).execute("http://"+hostname+"/api/v0.2/projects/", email, password, object.toString());
     }

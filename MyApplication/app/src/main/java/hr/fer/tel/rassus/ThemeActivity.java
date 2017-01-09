@@ -61,8 +61,9 @@ public class ThemeActivity extends AppCompatActivity {
         DeleteAction deleteAction= (DeleteAction) new DeleteAction(new DeleteAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                TextView textView = (TextView) findViewById(R.id.theme_deleted);
-                textView.setText("Project deleted!");
+//                TextView textView = (TextView) findViewById(R.id.theme_deleted);
+//                textView.setText("Project deleted!");
+                finish();
             }
         }).execute("http://" + hostname + "/api/v0.2/projects/" + id, email, password);
     }
