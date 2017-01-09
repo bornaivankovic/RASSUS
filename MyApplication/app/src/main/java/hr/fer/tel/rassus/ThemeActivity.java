@@ -33,14 +33,12 @@ public class ThemeActivity extends AppCompatActivity {
             TextView themeSize = (TextView) findViewById(R.id.theme_size);
             TextView themeTaken = (TextView) findViewById(R.id.theme_taken);
             TextView themeTeam = (TextView) findViewById(R.id.theme_team);
-            TextView themeCreated = (TextView) findViewById(R.id.theme_created);
             themeTitle.setText(object.getString("title"));
             themeDescription.setText(object.getString("description"));
             themeMentor.setText("Mentor: " + object.getString("mentor"));
             themeSize.setText("Size: " + object.getString("size"));
             themeTaken.setText("Taken: " + object.getString("taken"));
             themeTeam.setText("Team: " + object.getString("team"));
-            themeCreated.setText("Created: " + object.getString("created_at") + "\nUpdated: " + object.getString("updated_at"));
             id = object.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -63,7 +61,8 @@ public class ThemeActivity extends AppCompatActivity {
         DeleteAction deleteAction= (DeleteAction) new DeleteAction(new DeleteAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                finish();
+                TextView textView = (TextView) findViewById(R.id.theme_deleted);
+                textView.setText("Project deleted!");
             }
         }).execute("http://" + hostname + "/api/v0.2/projects/" + id, email, password);
     }

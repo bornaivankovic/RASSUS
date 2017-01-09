@@ -75,7 +75,8 @@ public class EditActivity extends AppCompatActivity {
         PutAction putAction= (PutAction) new PutAction(new PutAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                finish();
+                TextView textView = (TextView) findViewById(R.id.theme_edited);
+                textView.setText("Project edited!");
             }
         }).execute("http://"+hostname+"/api/v0.2/projects/" + object.getString("id"), email, password, object.toString());
     }

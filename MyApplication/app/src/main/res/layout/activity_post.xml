@@ -118,5 +118,14 @@
             android:layout_below="@+id/post_team"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post_done"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_posted"
+            android:gravity="center_horizontal"/>
     </RelativeLayout>
 </ScrollView>
