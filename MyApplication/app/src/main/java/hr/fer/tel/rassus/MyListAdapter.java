@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,25 +29,16 @@ import java.util.Objects;
 
 public class MyListAdapter extends BaseExpandableListAdapter {
 
-    private final ArrayList<String> titles;
-    private final ArrayList<String> child;
     private final Context mContext;
-    private final JsonParser parser;
     private JSONArray array;
 
     public MyListAdapter() {
         this.mContext = null;
-        this.titles = new ArrayList<>();
-        this.child = new ArrayList<>();
-        this.parser = null;
         this.array = new JSONArray();
     }
 
     public MyListAdapter(String stringArray, Context context) {
         this.mContext = context;
-        this.parser = new JsonParser(stringArray);
-        this.titles = parser.getTitles();
-        this.child = parser.JSONtoStringArray();
         this.array = null;
         try {
             this.array = new JSONArray(stringArray);
@@ -58,7 +50,7 @@ public class MyListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return titles.size();
+        return array.length();
     }
 
     @Override
@@ -68,12 +60,35 @@ public class MyListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int i) {
-        return titles.get(i);
+        JSONObject object;
+        String title = "";
+        try {
+            object = (JSONObject) array.get(i);
+            title = object.getString("title");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return title;
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        return child.get(i);
+        String str = "";
+        JSONObject object = null;
+        String desc = "", size = "", team = "", taken = "", mentor = "";
+        try {
+            object = (JSONObject) array.get(i);
+            desc = object.getString("description");
+            size = object.getString("size");
+            team = object.getString("team");
+            if(!object.getString("taken").equals("0")) taken = "Yes";
+            else taken = "No";
+            mentor = object.getString("mentor");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        str = "Description:\n" + desc + "\n\nMentor:\n" + mentor + "\n\nSize:\n" + size + "\n\nTaken:\n" + taken + "\n\nTeam:\n" + team;
+        return str;
     }
 
     @Override
@@ -131,7 +146,6 @@ public class MyListAdapter extends BaseExpandableListAdapter {
                 }
                 Intent intent = new Intent(mContext, ThemeActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("map", parser.getObject(groupPosition));
                 intent.putExtra("object", objectString);
                 mContext.startActivity(intent);
 

@@ -25,7 +25,6 @@ public class EditActivity extends AppCompatActivity {
         EditText editTitle = (EditText) findViewById(R.id.edit_title);
         EditText editDescription = (EditText) findViewById(R.id.edit_description);
         EditText editSize = (EditText) findViewById(R.id.edit_size);
-        EditText editTaken = (EditText) findViewById(R.id.edit_taken);
         EditText editMentor = (EditText) findViewById(R.id.edit_mentor);
         EditText editTeam = (EditText) findViewById(R.id.edit_team);
 
@@ -34,7 +33,6 @@ public class EditActivity extends AppCompatActivity {
             editTitle.setText(object.getString("title"), TextView.BufferType.EDITABLE);
             editDescription.setText(object.getString("description"), TextView.BufferType.EDITABLE);
             editSize.setText(object.getString("size"), TextView.BufferType.EDITABLE);
-            editTaken.setText(object.getString("taken"), TextView.BufferType.EDITABLE);
             editMentor.setText(object.getString("mentor"), TextView.BufferType.EDITABLE);
             editTeam.setText(object.getString("team"), TextView.BufferType.EDITABLE);
         } catch (JSONException e) {
@@ -46,7 +44,6 @@ public class EditActivity extends AppCompatActivity {
         EditText editTitle = (EditText) findViewById(R.id.edit_title);
         EditText editDescription = (EditText) findViewById(R.id.edit_description);
         EditText editSize = (EditText) findViewById(R.id.edit_size);
-        EditText editTaken = (EditText) findViewById(R.id.edit_taken);
         EditText editMentor = (EditText) findViewById(R.id.edit_mentor);
         EditText editTeam = (EditText) findViewById(R.id.edit_team);
 
@@ -54,9 +51,16 @@ public class EditActivity extends AppCompatActivity {
             object.put("title", editTitle.getText());
             object.put("description", editDescription.getText());
             object.put("size", editSize.getText());
-            object.put("taken", editTaken.getText());
             object.put("mentor", editMentor.getText());
-            object.put("team", editTeam.getText());
+            String team = editTeam.getText().toString();
+            if(!team.equalsIgnoreCase("")) {
+                object.put("taken", "1");
+                object.put("team", team);
+            }
+            else {
+                object.put("taken", "0");
+                object.put("team", team);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class ThemeActivity extends AppCompatActivity {
-    private HashMap<String, String> theme = new HashMap<String, String>();
     private JSONObject object;
     private String id;
 
@@ -26,7 +25,6 @@ public class ThemeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme);
 
-        this.theme = (HashMap<String, String>) getIntent().getSerializableExtra("map");
         try {
             object = new JSONObject(getIntent().getStringExtra("object"));
             TextView themeTitle = (TextView) findViewById(R.id.theme_title);

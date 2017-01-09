@@ -49,10 +49,8 @@ public class HttpDeleteHandler {
             String basicAuth = "Basic " + Base64.encodeToString(userpass.getBytes(), 0);
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
             conn.setRequestProperty ("Authorization", basicAuth);
             conn.setRequestMethod("DELETE");
-            conn.connect();
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
             response = convertStreamToString(in);
