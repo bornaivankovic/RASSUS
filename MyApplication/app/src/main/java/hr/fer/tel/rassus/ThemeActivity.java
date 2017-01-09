@@ -35,10 +35,10 @@ public class ThemeActivity extends AppCompatActivity {
             TextView themeTeam = (TextView) findViewById(R.id.theme_team);
             themeTitle.setText(object.getString("title"));
             themeDescription.setText(object.getString("description"));
-            themeMentor.setText(object.getString("mentor"));
-            themeSize.setText(object.getString("size"));
-            themeTaken.setText(object.getString("taken"));
-            themeTeam.setText(object.getString("team"));
+            themeMentor.setText("Mentor: " + object.getString("mentor"));
+            themeSize.setText("Size: " + object.getString("size"));
+            themeTaken.setText("Taken: " + object.getString("taken"));
+            themeTeam.setText("Team: " + object.getString("team"));
             id = object.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
