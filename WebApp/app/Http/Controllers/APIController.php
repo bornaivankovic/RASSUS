@@ -257,7 +257,7 @@ class APIController extends Controller
           return response("", 404);
         } else {
           $project->delete();
-          return response("", 204);
+          return response("", 200);
         }
     }
 
