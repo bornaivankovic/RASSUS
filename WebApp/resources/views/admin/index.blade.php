@@ -371,7 +371,7 @@
                     <section class="col-lg-12 connectedSortable">
                       <div class="col-lg-6">
                         <!-- Map box -->
-                        <div class="box box-solid bg-light-blue-gradient col-lg-6">
+                        <div class="box box-solid bg-teal-gradient col-lg-6">
                             <div class="box-header">
                                 <!-- tools box -->
                                 <div class="pull-right box-tools">
@@ -397,6 +397,49 @@
                                     <tr class="user{{$user->id}}">
                                       <td>{{$user->name}}</td>
                                       <td>{{$user->email}}</td>
+                                    </tr>
+                                  @endforeach
+                                </table>
+                                <div class="text-center">
+                                  {{ $users->links() }}
+                                </div>
+                              </div>
+                            </div>
+                            <!-- /.box-body-->
+
+                        </div>
+                        <!-- /.box -->
+                      </div>
+                      <div class="col-lg-6">
+                        <!-- Map box -->
+                        <div class="box box-solid bg-light-blue-gradient col-lg-6">
+                            <div class="box-header">
+                                <!-- tools box -->
+                                <div class="pull-right box-tools">
+                                    <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+                      <i class="fa fa-minus"></i></button>
+                                </div>
+
+                                <i class="fa fa-users"></i>
+
+                                <h3 class="box-title">
+                                    Aktivni korisnici
+                                </h3>
+                            </div>
+                            <div class="box-body">
+                              <div class="table-responsive">
+                                <table class="table table-borderless">
+                                  <tr>
+                                    <th>Ime</th>
+                                    <th>E-mail</th>
+                                    <th>Status</th>
+                                  </tr>
+
+                                  @foreach($online_users as $online_user)
+                                    <tr class="user{{$online_user->id}}">
+                                      <td>{{$online_user->name}}</td>
+                                      <td>{{$online_user->email}}</td>
+                                      <td><i class="fa fa-circle" id="online-status" aria-hidden="true"></i></td>
                                     </tr>
                                   @endforeach
                                 </table>

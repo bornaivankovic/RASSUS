@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Project;
 use App\User;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,6 +37,9 @@ class APIController extends Controller
     public function store(Request $request)
     {
       $request_body = $request->getContent();
+      $validation_errors = [];
+      $project = new Project;
+
 
       //validacija za prazan objekt
       if(empty($request_body)) {
@@ -48,11 +52,54 @@ class APIController extends Controller
       if(is_null($json_decoded)) {
         return response("Invalid request format", 400);
       }
+      if (sizeof($json_decoded) > 1) {
+        foreach ($json_decoded as $value) {
+          //validacija za nepotpun JSON format
+          $validator = Validator::make((array)$value, [
+          'title' => 'required',
+          'description' => 'required',
+          'size' => 'required',
+          'taken'  => 'required',
+          'mentor'  => 'required'
+          ]);
 
-      foreach ($json_decoded as $value) {
+          if ($validator->fails()) {
+            array_push($validation_errors, $validator->errors());
+           }
 
-        //validacija za nepotpun JSON format
-        $validator = Validator::make((array)$value, [
+        }
+
+        if(!empty($validation_errors)){
+          return response([
+                'message' => "Invalid format",
+                'errors' => $validation_errors
+                ],
+                400)
+                    ->withHeaders([
+                        'Content-Type' => 'application/json',
+                    ]);
+        }
+
+
+
+        foreach ($json_decoded as $value) {
+
+          $project->title = $value->title;
+          $project->description = $value->description;
+          $project->size = $value->size;
+          $project->taken = $value->taken;
+          $project->mentor = $value->mentor;
+          if (isset($value->team)) {
+            $project->team = $value->team;
+          } else {
+            $project->team = '';
+          }
+
+          $project->save();
+        }
+      } else {
+
+        $validator = Validator::make((array)$json_decoded, [
         'title' => 'required',
         'description' => 'required',
         'size' => 'required',
@@ -64,32 +111,24 @@ class APIController extends Controller
           array_push($validation_errors, $validator->errors());
          }
 
-      }
+         if(!empty($validation_errors)){
+           return response([
+                 'message' => "Invalid format",
+                 'errors' => $validation_errors
+                 ],
+                 400)
+                     ->withHeaders([
+                         'Content-Type' => 'application/json',
+                     ]);
+         }
 
-      if(!empty($validation_errors)){
-        return response([
-              'message' => "Invalid format",
-              'errors' => $validation_errors
-              ],
-              400)
-                  ->withHeaders([
-                      'Content-Type' => 'application/json',
-                  ]);
-      }
-
-
-
-      foreach ($json_decoded as $value) {
-
-        $project = new Project;
-
-        $project->title = $value->title;
-        $project->description = $value->description;
-        $project->size = $value->size;
-        $project->taken = $value->taken;
-        $project->mentor = $value->mentor;
-        if (isset($value->team)) {
-          $project->team = $value->team;
+        $project->title = $json_decoded->title;
+        $project->description = $json_decoded->description;
+        $project->size = $json_decoded->size;
+        $project->taken = $json_decoded->taken;
+        $project->mentor = $json_decoded->mentor;
+        if (isset($json_decoded->team)) {
+          $project->team = $json_decoded->team;
         } else {
           $project->team = '';
         }
@@ -148,28 +187,24 @@ class APIController extends Controller
         return response("Invalid JSON format", 400);
       }
 
-
-        foreach ($json_decoded as $value) {
-          if(isset($value->title)){
-              $project->title = $value->title;
+          if(isset($json_decoded->title)){
+              $project->title = $json_decoded->title;
           }
-          elseif (isset($value->description)) {
-              $project->description = $value->description;
+          if (isset($json_decoded->description)) {
+              $project->description = $json_decoded->description;
           }
-          elseif (isset($value->size)) {
-            $project->size = $value->size;
+          if (isset($json_decoded->size)) {
+            $project->size = $json_decoded->size;
           }
-          elseif (isset($value->taken)) {
-            $project->taken = $value->taken;
+          if (isset($json_decoded->taken)) {
+            $project->taken = $json_decoded->taken;
           }
-          elseif (isset($value->mentor)) {
-            $project->mentor = $value->mentor;
+          if (isset($json_decoded->mentor)) {
+            $project->mentor = $json_decoded->mentor;
           }
-          elseif (isset($value->team)) {
-            $project->team = $value->team;
+          if (isset($json_decoded->team)) {
+            $project->team = $json_decoded->team;
           }
-
-        }
 
         $project->save();
 
@@ -178,6 +213,34 @@ class APIController extends Controller
                 'Content-Type' => 'application/json',
             ]);
 
+    }
+
+    public function authenticate(Request $request) {
+
+      $request_content = $request->getContent();
+
+      $request_body = json_decode($request_content);
+
+
+      if(is_null($request_body)) {
+        return response("Invalid JSON format", 400);
+      }
+
+      if (Auth::attempt(['email' => $request_body->email, 'password' => $request_body->password])) {
+        $user = DB::table('users')->where('email', $request_body->email)->first();
+        if ($user->admin == 1) {
+          return response()->json([
+              'role' => "admin",
+          ]);
+        } else {
+          return response()->json([
+              'role' => "user",
+          ]);
+        }
+       }
+       return response()->json([
+           'role' => "guest",
+       ]);
     }
 
     /**
