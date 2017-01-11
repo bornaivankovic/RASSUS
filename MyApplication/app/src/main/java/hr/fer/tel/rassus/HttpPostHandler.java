@@ -53,8 +53,10 @@ public class HttpPostHandler {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
-            conn.setRequestProperty ("Authorization", basicAuth);
-            conn.setRequestProperty("Content-Type","application/json");
+            if(!reqUrl.contains("auth")) {
+                conn.setRequestProperty("Authorization", basicAuth);
+                conn.setRequestProperty("Content-Type", "application/json");
+            }
             conn.setRequestMethod("POST");
             String str = stringObject;
             byte[] outputInBytes = str.getBytes("UTF-8");

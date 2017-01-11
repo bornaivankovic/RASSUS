@@ -43,6 +43,13 @@ public class ThemeActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        String role=((GlobalVariables)getApplication()).getRole();
+        if(!role.equals("admin")){
+            Button button=(Button) findViewById(R.id.edit_button);
+            button.setVisibility(View.GONE);
+            button=(Button) findViewById(R.id.delete_button);
+            button.setVisibility(View.GONE);
+        }
     }
 
     public void edit(View view) {

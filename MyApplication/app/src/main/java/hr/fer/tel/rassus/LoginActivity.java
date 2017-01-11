@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        ((GlobalVariables)getApplication()).setRole("guest");
     }
 
     private void populateAutoComplete() {
@@ -311,31 +317,70 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final GlobalVariables g;
 
         UserLoginTask(String email, String password, GlobalVariables application) {
+
             mEmail = email;
             mPassword = password;
             g=application;
+
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String host=sharedPref.getString("hostname","");
+            String port=sharedPref.getString("port","");
+            String hostname = host+":"+port;
+
+            JSONObject obj=new JSONObject();
+
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                obj.put("email",mEmail);
+                obj.put("password",mPassword);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+            HttpPostHandler handler=new HttpPostHandler("http://"+hostname+"/api/v0.2/auth","","",obj.toString());
+            String response=handler.makeServiceCall();
+            JSONObject res= null;
+            String role="";
+            try {
+                res = new JSONObject(response);
+                if(res.toString().contains("password")){
+                    return false;
                 }
+                role=res.getString("role");
+                g.setRole(role);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+//            checkRole(mEmail,mPassword);
+            if(g.getRole().equals("admin")){
+                g.setAdmin(true);
+                return true;
+            }
+            else if(g.getRole().equals("user")){
+                g.setAdmin(true);
+                return true;
+            }
+            else{
+                // TODO: register the new account here.
             }
 
-            // TODO: register the new account here.
+
+
+
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+
+
             return true;
         }
 
@@ -381,6 +426,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void browse(View view){
         Intent intent = new Intent(LoginActivity.this,BrowseActivity.class);
         startActivity(intent);
+    }
+
+    private void checkRole(String mEmail,String mPassword){
+
     }
 
     @Override

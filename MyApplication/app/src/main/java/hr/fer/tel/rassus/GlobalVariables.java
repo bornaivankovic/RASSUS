@@ -15,6 +15,7 @@ public class GlobalVariables extends Application {
     private boolean isAdmin;
     private JSONArray array;
     private JSONObject object;
+    private String role;
 
     public GlobalVariables() {
         this.email = "admin@admin.com";
@@ -59,5 +60,13 @@ public class GlobalVariables extends Application {
 
     public void setObject(JSONObject object) {
         this.object = object;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

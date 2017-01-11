@@ -134,7 +134,12 @@ public class MyListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+        String role=((GlobalVariables)mContext).getRole();
+
         Button settings = (Button) convertView.findViewById(R.id.settings_button);
+        if(role.equals("guest")){
+            settings.setVisibility(View.GONE);
+        }
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
