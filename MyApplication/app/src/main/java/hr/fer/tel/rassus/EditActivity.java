@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,6 +78,7 @@ public class EditActivity extends AppCompatActivity {
             public void processFinish(String output) {
 //                TextView textView = (TextView) findViewById(R.id.theme_edited);
 //                textView.setText("Project edited!");
+                Toast.makeText(getApplicationContext(), "Project edited!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }).execute("http://"+hostname+"/api/v0.2/projects/" + object.getString("id"), email, password, object.toString());

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +61,7 @@ public class PostActivity extends AppCompatActivity {
             public void processFinish(String output) {
 //                TextView textView = (TextView) findViewById(R.id.theme_posted);
 //                textView.setText("Project posted!");
+                Toast.makeText(getApplicationContext(), "Project posted!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }).execute("http://"+hostname+"/api/v0.2/projects/", email, password, object.toString());

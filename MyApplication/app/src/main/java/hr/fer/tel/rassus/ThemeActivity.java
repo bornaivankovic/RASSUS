@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +71,7 @@ public class ThemeActivity extends AppCompatActivity {
             public void processFinish(String output) {
 //                TextView textView = (TextView) findViewById(R.id.theme_deleted);
 //                textView.setText("Project deleted!");
+                Toast.makeText(getApplicationContext(), "Project deleted!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }).execute("http://" + hostname + "/api/v0.2/projects/" + id, email, password);
