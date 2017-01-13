@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        ((GlobalVariables)getApplication()).setRole("guest");
+        ((GlobalVariables) getApplication()).setRole("guest");
     }
 
     private void populateAutoComplete() {
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password,((GlobalVariables) this.getApplication()));
+            mAuthTask = new UserLoginTask(email, password, ((GlobalVariables) this.getApplication()));
             mAuthTask.execute((Void) null);
         }
     }
@@ -320,7 +320,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             mEmail = email;
             mPassword = password;
-            g=application;
+            g = application;
 
         }
 
@@ -329,56 +329,55 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String host=sharedPref.getString("hostname","");
-            String port=sharedPref.getString("port","");
-            String hostname = host+":"+port;
+            String host = sharedPref.getString("hostname", "");
+            String port = sharedPref.getString("port", "");
+            String hostname = host + ":" + port;
 
-            JSONObject obj=new JSONObject();
+            JSONObject obj = new JSONObject();
 
             try {
-                obj.put("email",mEmail);
-                obj.put("password",mPassword);
+                obj.put("email", mEmail);
+                obj.put("password", mPassword);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            HttpPostHandler handler=new HttpPostHandler("http://"+hostname+"/api/v0.2/auth","","",obj.toString());
-            String response=handler.makeServiceCall();
-            JSONObject res= null;
-            String role="";
+            HttpPostHandler handler = new HttpPostHandler("http://" + hostname + "/api/v0.2/auth", "", "", obj.toString());
+            String response = handler.makeServiceCall();
+            JSONObject res = null;
+            String role = "";
             try {
                 res = new JSONObject(response);
-                if(res.toString().contains("password")){
+                if (res.toString().contains("password")) {
                     return false;
                 }
-                role=res.getString("role");
+                role = res.getString("role");
                 g.setRole(role);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            checkRole(mEmail,mPassword);
-            if(g.getRole().equals("admin")){
+            if (g.getRole().equals("admin")) {
                 g.setAdmin(true);
                 return true;
-            }
-            else if(g.getRole().equals("user")){
-                g.setAdmin(true);
+            } else if (g.getRole().equals("user")) {
+                g.setAdmin(false);
                 return true;
+            } else {
+                JSONObject obj2 = new JSONObject();
+                try {
+                    String[] split = mEmail.split("@");
+                    String name = split[0];
+                    obj2.put("name", name);
+                    obj2.put("email",mEmail);
+                    obj2.put("password",mPassword);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                handler = new HttpPostHandler("http://" + hostname + "/api/v0.2/register", "", "",obj2.toString());
+                handler.makeServiceCall();
+                g.setRole("user");
+                g.setAdmin(false);
             }
-            else{
-                // TODO: register the new account here.
-            }
-
-
-
-
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
 
 
             return true;
@@ -389,22 +388,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            Map<String,String> USER_AUTH_LEVELS=new HashMap<String,String>();
-            USER_AUTH_LEVELS.put("foo@example.com", "user");
-            USER_AUTH_LEVELS.put("bar@example.com", "user");
-            USER_AUTH_LEVELS.put("admin@admin.com", "admin");
-            USER_AUTH_LEVELS.put("test@test.com", "user");
-
             if (success) {
                 g.setEmail(mEmail);
                 g.setPassword(mPassword);
-                String auth=USER_AUTH_LEVELS.get(mEmail);
-                if(auth.equals("user")){
-                    browse(findViewById(R.id.content_browse));
-                }
-                else if(auth.equals("admin")){
-                    adminbrowse(findViewById(R.id.activity_browse_admin));
-                }
+                adminbrowse(findViewById(R.id.activity_browse_admin));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -423,15 +410,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivity(intent);
     }
 
-    public void browse(View view){
-        Intent intent = new Intent(LoginActivity.this,BrowseActivity.class);
-        startActivity(intent);
-    }
-
-    private void checkRole(String mEmail,String mPassword){
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -448,7 +426,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(LoginActivity.this,SettingsActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
             startActivity(intent);
         }
 

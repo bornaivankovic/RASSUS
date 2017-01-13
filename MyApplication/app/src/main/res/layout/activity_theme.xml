@@ -93,6 +93,7 @@
             android:layout_alignLeft="@+id/delete_button"
             android:layout_alignStart="@+id/delete_button"
             android:layout_marginTop="10dp"
+            android:onClick="apply"
             android:id="@+id/button_apply" />
 
     </RelativeLayout>
