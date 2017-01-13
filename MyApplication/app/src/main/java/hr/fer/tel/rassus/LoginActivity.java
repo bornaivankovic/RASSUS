@@ -39,9 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -391,7 +389,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 g.setEmail(mEmail);
                 g.setPassword(mPassword);
-                adminbrowse(findViewById(R.id.activity_browse_admin));
+                browse(findViewById(R.id.activity_browse));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -405,8 +403,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    public void adminbrowse(View view) {
-        Intent intent = new Intent(LoginActivity.this, BrowseAdminActivity.class);
+    public void browse(View view) {
+        Intent intent = new Intent(LoginActivity.this, BrowseActivity.class);
         startActivity(intent);
     }
 

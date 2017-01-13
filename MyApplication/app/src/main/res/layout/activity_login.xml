@@ -69,20 +69,13 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
-<!--
+
             <Button
                 android:text="Browse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/browse_button"
+                android:id="@+id/button_browse"
                 android:onClick="browse"/>
--->
-            <Button
-                android:text="Admin browse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/button_adminbrowse"
-                android:onClick="adminbrowse"/>
 
 
         </LinearLayout>

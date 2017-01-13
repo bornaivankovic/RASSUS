@@ -17,13 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".BrowseActivity"
-            android:label="@string/title_activity_browse"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -35,7 +28,7 @@
         <activity
             android:name=".ThemeActivity"
             android:label="@string/title_activity_theme"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".BrowseActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -43,14 +36,14 @@
             android:name=".EditActivity"
             android:label="@string/edit_button" />
         <activity
-            android:name=".BrowseAdminActivity"
+            android:name=".BrowseActivity"
             android:label="@string/title_activity_browse" />
         <activity
             android:name=".PostActivity"
-            android:label="Post new project" />
-        <activity android:name=".TeamSelectActivity"
-            android:label="Add team members"
-            ></activity>
+            android:label="@string/title_activity_post" />
+        <activity
+            android:name=".TeamSelectActivity"
+            android:label="@string/title_activity_team"/>
     </application>
 
 </manifest>
