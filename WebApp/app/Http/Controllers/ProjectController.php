@@ -126,18 +126,32 @@ class ProjectController extends Controller
             'errors' => "Neuspješna prijava. Projekt zauzet!"
           ]);
         }
+        if (is_null($request->team)) {
+          return response([
+            'errors' => "Nesto"
+          ]);
+        }
         if (count($request->team) != $project->size) {
           return response([
             'errors' => "Neuspješna prijava. Nedovoljan broj članova!"
           ]);
+        } else {
+          $project->taken = 1;
+          if ($project->size == 1) {
+            if ($request->team == null) {
+              return response([
+                'errors' => "Neuspješna prijava. Nedovoljan broj članova!"
+              ]);
+            }
+            $project->team = $request->team;
+          } else {
+            $project->team = implode(",",$request->team);
+          }
+          $project->save();
+          return response([
+            'successs' => "Neuspješna prijava. Nedovoljan broj članova!"
+          ]);
         }
-        $project->taken = 1;
-        $project->team = implode(",",$request->team);
-        $project->save();
-        return response([
-          'successs' => "Neuspješna prijava. Nedovoljan broj članova!"
-        ]);
-
     }
 
 
