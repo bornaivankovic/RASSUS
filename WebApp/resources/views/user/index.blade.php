@@ -490,7 +490,7 @@
     /*for (var i = 1; i <= teamSize; i++) {
       $('#appendNum').append("<div class='form-group appendStudent'><label class='control-label col-sm-2' for='team'>Student</label><div class='col-sm-10'><select class='dynamic' multiple='multiple' name='multiple'></select></div>");
     }*/
-    $('#appendNum').append("<div class='form-group appendStudent'><label class='control-label col-sm-2' for='team'>Studenti: </label><div class='col-sm-10'><select id='dynamic' multiple='multiple' name='multiple'></select></div>");
+    $('#appendNum').append("<div class='form-group appendStudent'><label class='control-label col-sm-2'  for='team'>Studenti: </label><div class='col-lg-10'><select class='col-lg-12 col-sm-12 col-md-12' id='dynamic' multiple='multiple' name='multiple'></select></div>");
 
     var userNum;
     var users = [];
@@ -500,8 +500,8 @@
     for (var i = 0; i < userNum; i++) {
       $('#dynamic').append('<option>' + data[i] + '</option>');
     }
-    $('#dynamic').selectric();
-    $('#dynamic').selectric('refresh');
+    /*$('#dynamic').selectric();
+    $('#dynamic').selectric('refresh');*/
     $('#dynamic').select2();
     $("#dynamic").select2({
       maximumSelectionLength: teamSize,
