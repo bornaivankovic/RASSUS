@@ -22,3 +22,11 @@ Route::post('projects', 'APIController@store')->middleware('auth.basic.once');
 Route::delete('projects/{id}', 'APIController@delete')->middleware('auth.basic.once');
 
 Route::put('projects/{id}', 'APIController@update')->middleware('auth.basic.once');
+
+Route::post('users/{email}', 'APIController@checkIfAdmin');
+
+Route::post('auth', 'APIController@authenticate');
+
+Route::post('register', 'APIController@register');
+
+Route::put('projects/apply/{id}', 'APIController@apply');

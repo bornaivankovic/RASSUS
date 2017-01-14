@@ -10,12 +10,15 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".GlobalVariables"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,12 +26,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BrowseActivity"
-            android:label="@string/title_activity_browse"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ThemeActivity"
+            android:label="@string/title_activity_theme"
+            android:parentActivityName=".BrowseActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".EditActivity"
+            android:label="@string/edit_button" />
+        <activity
+            android:name=".BrowseActivity"
+            android:label="@string/title_activity_browse" />
+        <activity
+            android:name=".PostActivity"
+            android:label="@string/title_activity_post" />
+        <activity
+            android:name=".TeamSelectActivity"
+            android:label="@string/title_activity_team"/>
     </application>
 
 </manifest>

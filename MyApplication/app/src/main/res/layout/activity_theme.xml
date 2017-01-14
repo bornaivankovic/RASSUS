@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:fillViewport="false">
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="hr.fer.tel.rassus.ThemeActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/theme_title"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_description" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_mentor"
+            android:layout_below="@+id/theme_description"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_mentor"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/theme_taken"
+            android:layout_below="@+id/theme_size"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/theme_taken"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:id="@+id/theme_team" />
+
+        <Button
+            android:text="@string/edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_button"
+            android:layout_marginTop="20dp"
+            android:onClick="edit"
+            android:layout_below="@+id/theme_team"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="@string/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_button"
+            android:layout_alignLeft="@+id/edit_button"
+            android:layout_alignStart="@+id/edit_button"
+            android:layout_marginTop="10dp"
+            android:id="@+id/delete_button"
+            android:onClick="delete"/>
+
+        <Button
+            android:text="Apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_button"
+            android:layout_alignLeft="@+id/delete_button"
+            android:layout_alignStart="@+id/delete_button"
+            android:layout_marginTop="10dp"
+            android:onClick="apply"
+            android:id="@+id/button_apply" />
+
+    </RelativeLayout>
+</ScrollView>

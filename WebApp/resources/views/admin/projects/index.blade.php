@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h1>Dodavanje projekata</h1>
+      <h3>Dodavanje projekata</h3>
     </div>
   </div>
 
@@ -30,7 +30,6 @@
     <div class="table-responsive">
       <table class="table table-borderless" id="table">
         <tr>
-          <th>No.</th>
           <th>Naslov</th>
           <th>Opis</th>
           <th>Akcije</th>

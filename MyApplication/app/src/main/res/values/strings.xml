@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">RASSUS</string>
-    <string name="title_activity_browse">BrowseActivity</string>
+    <string name="title_activity_browse">Browse</string>
     <string name="title_activity_login">Sign in</string>
-    <string name="default_ip">192.168.1.11</string>
+    <string name="title_activity_theme">Settings</string>
+    <string name="title_activity_post">Post new project</string>
+    <string name="title_activity_team">Add team members</string>
+    <string name="default_ip">bornaivankovic.com</string>
     <string name="default_port">8000</string>
 
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -18,4 +21,27 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to browsing -->
+    <string name="settings_button">Theme settings</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="edit_title">Title</string>
+    <string name="edit_description">Description</string>
+    <string name="edit_size">Size</string>
+    <string name="edit_taken">Taken</string>
+    <string name="edit_done">Done</string>
+    <string name="edit_team">Team</string>
+    <string name="edit_mentor">Mentor</string>
+    <string name="post_button">Post new project</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_title_hostname">Hostname</string>
+    <string name="pref_default_hostname">bornaivankovic.com</string>
+    <string name="pref_title_port">Port</string>
+    <string name="pref_default_port">8000</string>
+    <string name="pref_header_general">General</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

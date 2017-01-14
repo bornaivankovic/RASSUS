@@ -3,7 +3,10 @@ package hr.fer.tel.rassus;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +21,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -28,6 +34,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +58,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world", "admin@admin.com:lozinka",
+            "test@test.com:testerino"
     };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -92,6 +103,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        ((GlobalVariables) getApplication()).setRole("guest");
     }
 
     private void populateAutoComplete() {
@@ -185,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, ((GlobalVariables) this.getApplication()));
             mAuthTask.execute((Void) null);
         }
     }
@@ -298,32 +312,72 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final GlobalVariables g;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, GlobalVariables application) {
+
             mEmail = email;
             mPassword = password;
+            g = application;
+
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String host = sharedPref.getString("hostname", "");
+            String port = sharedPref.getString("port", "");
+            String hostname = host + ":" + port;
+
+            JSONObject obj = new JSONObject();
+
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                obj.put("email", mEmail);
+                obj.put("password", mPassword);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+            HttpPostHandler handler = new HttpPostHandler("http://" + hostname + "/api/v0.2/auth", "", "", obj.toString());
+            String response = handler.makeServiceCall();
+            JSONObject res = null;
+            String role = "";
+            try {
+                res = new JSONObject(response);
+                if (res.toString().contains("password")) {
+                    return false;
                 }
+                role = res.getString("role");
+                g.setRole(role);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (g.getRole().equals("admin")) {
+                g.setAdmin(true);
+                return true;
+            } else if (g.getRole().equals("user")) {
+                g.setAdmin(false);
+                return true;
+            } else {
+                JSONObject obj2 = new JSONObject();
+                try {
+                    String[] split = mEmail.split("@");
+                    String name = split[0];
+                    obj2.put("name", name);
+                    obj2.put("email",mEmail);
+                    obj2.put("password",mPassword);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                handler = new HttpPostHandler("http://" + hostname + "/api/v0.2/register", "", "",obj2.toString());
+                handler.makeServiceCall();
+                g.setRole("user");
+                g.setAdmin(false);
             }
 
-            // TODO: register the new account here.
+
             return true;
         }
 
@@ -333,7 +387,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                g.setEmail(mEmail);
+                g.setPassword(mPassword);
+                browse(findViewById(R.id.activity_browse));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -345,6 +401,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    public void browse(View view) {
+        Intent intent = new Intent(LoginActivity.this, BrowseActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(LoginActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

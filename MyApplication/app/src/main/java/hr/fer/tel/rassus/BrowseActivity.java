@@ -1,12 +1,12 @@
 package hr.fer.tel.rassus;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 public class BrowseActivity extends AppCompatActivity {
@@ -15,20 +15,32 @@ public class BrowseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        String hostname=getIntent().getStringExtra("hostname");
+    }
 
+    public void post(View view) {
+        Intent intent = new Intent(BrowseActivity.this, PostActivity.class);
+        startActivity(intent);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String role=((GlobalVariables)getApplication()).getRole();
+        if(!role.equals("admin")){
+            Button button=(Button) findViewById(R.id.post_button);
+            button.setVisibility(View.GONE);
+        }
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String host=sharedPref.getString("hostname","");
+        String port=sharedPref.getString("port","");
+        String hostname = host+":"+port;
         GetAction getAction= (GetAction) new GetAction(new GetAction.AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                JsonParser parser=new JsonParser(output);
                 ExpandableListView listView=(ExpandableListView) findViewById(R.id.list_view);
-                listView.setAdapter(new MyListAdapter(parser.parse(),getApplicationContext()));
+                listView.setAdapter(new MyListAdapter(output, getApplicationContext()));
 
             }
         }).execute("http://"+hostname+"/api/v0.2/projects");
     }
-
 }
