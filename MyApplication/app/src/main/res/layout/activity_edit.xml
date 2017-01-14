@@ -50,8 +50,7 @@
             android:layout_below="@+id/text_description"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/edit_description"
-            android:inputType="text"/>
+            android:id="@+id/edit_description"/>
 
         <TextView
             android:text="@string/edit_size"
