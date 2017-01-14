@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Validator;
 use Response;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 
 class ProjectController extends Controller
@@ -117,30 +120,26 @@ class ProjectController extends Controller
 
     public function apply(Request $request)
     {
-      $rules = array(
-        'team' => 'required',
-      );
-      // for Validator
-      $validator = Validator::make ( Input::all (), $rules );
-
-      if ($validator->fails())
-        return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
-      else {
         $project = Project::find($request->id);
-
         if ($project->taken == 1) {
-          return Response::json(array('errors' => 'Projekt zauzet'));
-        } else {
-          $project->taken = 1;
-          $project->team = $request->team;
+          return response([
+            'errors' => "Neuspješna prijava. Projekt zauzet!"
+          ]);
         }
-
+        if (count($request->team) != $project->size) {
+          return response([
+            'errors' => "Neuspješna prijava. Nedovoljan broj članova!"
+          ]);
+        }
+        $project->taken = 1;
+        $project->team = implode(",",$request->team);
         $project->save();
-
-        return response()->json($project);
-      }
+        return response([
+          'successs' => "Neuspješna prijava. Nedovoljan broj članova!"
+        ]);
 
     }
+
 
 
     /**
@@ -153,5 +152,10 @@ class ProjectController extends Controller
     {
       Project::find($request->id)->delete();
       return response()->json();
+    }
+
+    public function getUsers(){
+      $users = $titles = DB::table('users')->where('admin', '0')->pluck('name');
+      return response()->json($users);
     }
 }

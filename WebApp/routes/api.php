@@ -26,3 +26,7 @@ Route::put('projects/{id}', 'APIController@update')->middleware('auth.basic.once
 Route::post('users/{email}', 'APIController@checkIfAdmin');
 
 Route::post('auth', 'APIController@authenticate');
+
+Route::post('register', 'APIController@register');
+
+Route::put('projects/apply/{id}', 'APIController@apply');

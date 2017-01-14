@@ -614,6 +614,7 @@ $(document).on('click', '#add', function(e) {
         $('.error').text(data.errors.mentor);
         $('.error').text(data.errors.size);
       } else {
+
         $('.error').remove();
         $('#table').append("<tr class='item" + data.id + "'><td>" + data.title + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-warning' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-edit'></span> Uredi</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-trash'></span> Obriši</button></td></tr>");
       }

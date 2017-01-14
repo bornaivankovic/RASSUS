@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/css/selectric.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="css/skins/_all-skins.min.css">
@@ -28,6 +29,10 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+    <link rel="stylesheet" href="css/select2.min.css">
+
+    <link rel="stylesheet" href="css/user.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -223,7 +228,13 @@
                 </div>
                 <!-- /.row -->
                 <!-- Main row -->
+                <p class="col-lg-11 col-md-11 col-sm-11 error text-center alert alert-danger hidden"></p>
+                <div id="postSuccess" class="col-lg-11 col-md-11 col-sm-11 alert alert-success alert-dismissible hidden" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <strong>Uspješna prijava!</strong> Za prikaz osvježite prozor.
+                </div>
                 <div class="row">
+
                     <!-- Left col -->
                     <section class="col-lg-12 text-center">
                         <!-- Custom tabs (Charts with tabs)-->
@@ -269,11 +280,11 @@
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title"></h4>
                                 </div>
                                 <div class="modal-body">
-                                  <form class="form-horizontal" role="form">
+                                  <form class="form-horizontal" role="form" id="appendNum">
                                     <div class="form-group">
                                       <label class="control-label col-sm-2" for="id">ID :</label>
                                       <div class="col-sm-10">
@@ -293,23 +304,18 @@
                                     </div>
                                   </div>
                                   <div class="form-group">
-                                  <label class="control-label col-sm-2" for="size">Broj studenata:</label>
-                                  <div class="col-sm-10">
-                                    <input type="name" class="form-control" id="stnum" disabled>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                <label class="control-label col-sm-2" for="team">Studenti:</label>
-                                <div class="col-sm-10">
-                                  <input type="name" class="form-control" id="std">
-                                </div>
-                              </div>
-                                    <div class="form-group">
                                     <label class="control-label col-sm-2" for="description">Opis:</label>
                                     <div class="col-sm-10">
                                       <input type="name" class="form-control" id="d" disabled>
-                                    </div>
                                   </div>
+
+                              </div>
+                              <div class="form-group">
+                              <label class="control-label col-sm-2" for="size">Broj studenata:</label>
+                              <div class="col-sm-10">
+                                <input type="name" class="form-control" id="stnum" disabled>
+                              </div>
+                            </div>
                                   </form>
 
                                   <div class="modal-footer">
@@ -417,7 +423,6 @@
         </footer>
 
 
-
     <!-- jQuery 2.2.3 -->
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -428,7 +433,7 @@
     </script>
     <!-- Bootstrap 3.3.6 -->
       <script type="text/javascript" src="{!! asset('js/bootstrap.min.js') !!}"></script>
-
+      <script src="js/jquery.selectric.min.js"></script>
     <!-- Sparkline -->
     <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
@@ -454,6 +459,8 @@
     <script src="js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="js/demo.js"></script>
+    <script src="js/select2.full.min.js"></script>
+
     <script type="text/javascript">
 
     // Edit Data (Modal and function edit data)
@@ -474,7 +481,41 @@
     $('#t').val($(this).data('title'));
     $('#d').val($(this).data('description'));
     $('#myModal').modal('show');
+
+    // KOD za prikazivanje studenata
+    var teamSize = parseInt($('#stnum').val());
+
+
+
+    /*for (var i = 1; i <= teamSize; i++) {
+      $('#appendNum').append("<div class='form-group appendStudent'><label class='control-label col-sm-2' for='team'>Student</label><div class='col-sm-10'><select class='dynamic' multiple='multiple' name='multiple'></select></div>");
+    }*/
+    $('#appendNum').append("<div class='form-group appendStudent'><label class='control-label col-sm-2' for='team'>Studenti: </label><div class='col-sm-10'><select id='dynamic' multiple='multiple' name='multiple'></select></div>");
+
+    var userNum;
+    var users = [];
+    $.get("/allUsers").done(function(data){
+    userNum = data.length;
+
+    for (var i = 0; i < userNum; i++) {
+      $('#dynamic').append('<option>' + data[i] + '</option>');
+    }
+    $('#dynamic').selectric();
+    $('#dynamic').selectric('refresh');
+    $('#dynamic').select2();
+    $("#dynamic").select2({
+      maximumSelectionLength: teamSize,
+      tokenSeparators: [',', ' ']
+    });
+    });
+
 });
+
+$('#myModal').on('hide.bs.modal', function () {
+    $( ".appendStudent" ).remove();
+});
+// kraj koda
+
   $('.modal-footer').on('click', '.edit', function() {
   $.ajax({
       type: 'post',
@@ -482,10 +523,17 @@
       data: {
           '_token': $('input[name=_token]').val(),
           'id': $('#fid').val(),
-          'team': $('#std').val(),
+          'team': $('#dynamic').val(),
+
       },
       success: function(data) {
-        alert('Uspješna prijava')
+        if ((data.errors)) {
+          $('.error').removeClass('hidden');
+          $('.error').text(data.errors);
+        } else {
+          $('#postSuccess').removeClass('hidden');
+          $('#postSuccess').text(data.success);
+        }
       }
   });
 });

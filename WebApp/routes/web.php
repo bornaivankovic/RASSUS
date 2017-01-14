@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/allUsers', 'ProjectController@getUsers');
+
 Auth::routes();
 
 Route::group(['middleware' => ['before']], function(){
@@ -110,5 +112,6 @@ Route::group(['middleware' => ['authAdmin']], function() {
   Route::post ( '/editItem', 'ProjectController@update' );
   Route::post ( '/addItem', 'ProjectController@store' );
   Route::post ( '/deleteItem', 'ProjectController@destroy' );
-  Route::post ( '/applyItem', 'ProjectController@apply' );
 });
+
+Route::post( '/applyItem', 'ProjectController@apply' );

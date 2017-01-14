@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Validator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
 
 class APIController extends Controller
 {
@@ -43,31 +45,32 @@ class APIController extends Controller
 
       //validacija za prazan objekt
       if(empty($request_body)) {
-        return response("Invalid request format", 400);
+        return response("Empty request", 400);
       }
 
       $json_decoded = json_decode($request_body);
 
       //validacija za neispravan JSON format
       if(is_null($json_decoded)) {
-        return response("Invalid request format", 400);
+        return response("Invalid format", 400);
       }
+
       if (sizeof($json_decoded) > 1) {
         foreach ($json_decoded as $value) {
           //validacija za nepotpun JSON format
-          $validator = Validator::make((array)$value, [
-          'title' => 'required',
-          'description' => 'required',
-          'size' => 'required',
-          'taken'  => 'required',
-          'mentor'  => 'required'
-          ]);
+            $validator = Validator::make((array)$value, [
+            'title' => 'required',
+            'description' => 'required',
+            'size' => 'required',
+            'taken'  => 'required',
+            'mentor'  => 'required'
+            ]);
 
-          if ($validator->fails()) {
-            array_push($validation_errors, $validator->errors());
-           }
+            if ($validator->fails()) {
+              array_push($validation_errors, $validator->errors());
+             }
 
-        }
+          }
 
         if(!empty($validation_errors)){
           return response([
@@ -277,6 +280,59 @@ class APIController extends Controller
       } else {
         return response("", 404);
       }
+    }
+
+    public function apply(Request $request, $id)
+    {
+      $rules = array(
+        'team' => 'required',
+      );
+      // for Validator
+      $validator = Validator::make ( Input::all (), $rules );
+
+      if ($validator->fails())
+        return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
+      else {
+        $project = Project::find($id);
+
+        if ($project->taken == 1) {
+          return response("", 400);
+        } else {
+          $project->taken = 1;
+          $project->team = $request->team;
+        }
+
+        $project->save();
+
+        return response("",200);
+      }
+    }
+
+    public function register(Request $request) {
+      $user = new User();
+
+      $rules = array(
+        'email' => 'required',
+        'name' => 'required',
+        'password' => 'required',
+      );
+
+      $validator = Validator::make ( Input::all (), $rules );
+
+      if ($validator->fails())
+        return response("", 400);
+
+      $request_body = json_decode($request->getContent());
+
+      if(is_null($request_body)) {
+        return response("Invalid JSON format", 400);
+      }
+
+      $user->name = $request_body->name;
+      $user->email = $request_body->email;
+      $user->password = Hash::make($request->password);
+
+      $user->save();
 
     }
 }
