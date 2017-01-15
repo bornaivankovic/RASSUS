@@ -47,7 +47,7 @@
 
         <header class="main-header">
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="user" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
@@ -81,7 +81,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                        <a href="/profile" class="btn btn-default btn-flat">Profil</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="/logout" class="btn btn-default btn-flat">Odjava</a>
@@ -246,7 +246,7 @@
                                   <th class="col-lg-1 col-md-1 col-sm-1">Mentor</th>
                                   <th class="col-lg-1 col-md-1 col-sm-1">Broj studenata</th>
                                   <th class="col-lg-6 col-md-6 col-sm-3">Opis</th>
-                                  <th>Akcije</th>
+                                  <th >Akcije</th>
                                 </tr>
                                 {{ csrf_field() }}
 

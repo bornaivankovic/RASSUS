@@ -43,7 +43,7 @@
 
         <header class="main-header">
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="admin" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
@@ -77,7 +77,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                        <a href="/profile" class="btn btn-default btn-flat">Profil</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="/logout" class="btn btn-default btn-flat">Odjava</a>
@@ -275,9 +275,9 @@
                             <div class="table-responsive">
                               <table class="table table-borderless text-center" id="table">
                                 <tr>
-                                  <th>Naslov</th>
-                                  <th>Opis</th>
-                                  <th>Akcije</th>
+                                  <th class="col-lg-2 col-md-2 col-sm-1">Naslov</th>
+                                  <th class="col-lg-6 col-md-6 col-sm-3">Opis</th>
+                                  <th class="col-lg-2 col-md-2 col-sm-2">Akcije</th>
                                 </tr>
                                 {{ csrf_field() }}
 
