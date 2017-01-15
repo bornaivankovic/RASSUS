@@ -231,27 +231,27 @@
                 <p class="col-lg-11 col-md-11 col-sm-11 error text-center alert alert-danger hidden"></p>
                 <div id="postSuccess" class="col-lg-11 col-md-11 col-sm-11 alert alert-success alert-dismissible hidden" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Uspješna prijava!</strong> Za prikaz osvježite prozor.
+
                 </div>
                 <div class="row">
 
                     <!-- Left col -->
-                    <section class="col-lg-12 text-center">
+                    <section class="col-lg-12 col-sm-12 col-md-12 nofloat text-center">
                         <!-- Custom tabs (Charts with tabs)-->
                         <div class="nav-tabs-custom">
                             <div class="table-responsive">
-                              <table class="table table-borderless text-center" id="table">
+                              <table class=" table table-borderless text-center" id="table">
                                 <tr>
-                                  <th>Naslov</th>
-                                  <th>Mentor</th>
-                                  <th>Broj studenata</th>
-                                  <th>Opis</th>
+                                  <th class="col-lg-2 col-md-2 col-sm-1">Naslov</th>
+                                  <th class="col-lg-1 col-md-1 col-sm-1">Mentor</th>
+                                  <th class="col-lg-1 col-md-1 col-sm-1">Broj studenata</th>
+                                  <th class="col-lg-6 col-md-6 col-sm-3">Opis</th>
                                   <th>Akcije</th>
                                 </tr>
                                 {{ csrf_field() }}
 
                                 @foreach($projects as $project)
-                                  <tr class="item{{$project->id}}">
+                                  <tr class="item{{$project->id}}" class="col-lg-1 col-md-1 col-sm-1">
                                     <td>{{$project->title}}</td>
                                     <td>{{$project->mentor}}</td>
                                     <td>{{$project->size}}</td>
@@ -481,7 +481,8 @@
     $('#t').val($(this).data('title'));
     $('#d').val($(this).data('description'));
     $('#myModal').modal('show');
-
+    $('#postSuccess').addClass('hidden');
+    $('.error').addClass('hidden');
     // KOD za prikazivanje studenata
     var teamSize = parseInt($('#stnum').val());
 
