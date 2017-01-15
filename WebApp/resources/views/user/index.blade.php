@@ -231,7 +231,7 @@
                 <p class="col-lg-11 col-md-11 col-sm-11 error text-center alert alert-danger hidden"></p>
                 <div id="postSuccess" class="col-lg-11 col-md-11 col-sm-11 alert alert-success alert-dismissible hidden" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <strong>Uspješna prijava!</strong> Za prikaz osvježite prozor.
+
                 </div>
                 <div class="row">
 
@@ -481,7 +481,8 @@
     $('#t').val($(this).data('title'));
     $('#d').val($(this).data('description'));
     $('#myModal').modal('show');
-
+    $('#postSuccess').addClass('hidden');
+    $('.error').addClass('hidden');
     // KOD za prikazivanje studenata
     var teamSize = parseInt($('#stnum').val());
 

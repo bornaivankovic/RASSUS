@@ -240,10 +240,17 @@ class APIController extends Controller
               'role' => "user",
           ]);
         }
-       }
-       return response()->json([
-           'role' => "guest",
-       ]);
+      } else {
+        if(is_null($user = DB::table('users')->where('email', $request_body->email)->first())) {
+          return response()->json([
+              'role' => "wrong email",
+          ]);
+        } else {
+          return response()->json([
+              'role' => "wrong password",
+          ]);
+        }
+      }
     }
 
     /**
