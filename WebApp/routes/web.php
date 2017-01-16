@@ -73,7 +73,7 @@ Route::group(['middleware' => ['before']], function(){
       if ($projects_taken == 0) {
         $project_stat = 0;
       } else {
-        $project_stat = ($projects_taken/$project_num)*100;
+        $project_stat = number_format(($projects_taken/$project_num)*100, 2, '.', '');
       }
         return view('user.index', [
           'user_num' => $user_num,

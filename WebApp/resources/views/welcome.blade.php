@@ -60,7 +60,7 @@
 				<p class="android-paragraph"> Dostupno i za Android uređaje</p>
 				<ul class="actions">
 					<li>
-						<a href="#" class="button special download"><img src="images/android.png" alt="" />Preuzmi</a>
+						<a href="https://github.com/vedranserences/RASSUS/releases/download/v1.2/app-debug.apk" class="button special download"><img src="images/android.png" alt="" />Preuzmi</a>
 					</li>
 				</ul>
 			</div>

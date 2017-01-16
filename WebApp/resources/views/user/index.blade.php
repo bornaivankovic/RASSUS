@@ -230,6 +230,7 @@
                 <!-- Main row -->
                 <p class="col-lg-11 col-md-11 col-sm-11 error text-center alert alert-danger hidden"></p>
                 <div id="postSuccess" class="col-lg-11 col-md-11 col-sm-11 alert alert-success alert-dismissible hidden" role="alert">
+                  Uspješna prijava na projekt:
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                 </div>
@@ -533,7 +534,13 @@ $('#myModal').on('hide.bs.modal', function () {
           $('.error').text(data.errors);
         } else {
           $('#postSuccess').removeClass('hidden');
-          $('#postSuccess').text(data.success);
+          $('#postSuccess').append("<strong>" + data.success + "</strong>");
+          setTimeout(
+            function()
+            {
+              location.reload()
+              //do something special
+            }, 3000);
         }
       }
   });

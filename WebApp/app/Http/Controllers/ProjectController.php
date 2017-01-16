@@ -145,7 +145,7 @@ class ProjectController extends Controller
           }
           $project->save();
           return response([
-            'success' => "Uspješna prijava na projekt " . $project->title,
+            'success' => $project->title,
           ]);
     }
 
